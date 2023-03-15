@@ -7,7 +7,7 @@ public class monopoly {
     }
     public void Play() {
         board b = new board();
-        String[] names = {"Roro", "Arthur"};
+        String[] names = {"Khaled", "Arthur"};
         player[] p = new player[names.length];
         for (int i = 0; i < names.length; i++) {p[i] = new player(names[i]);}
         while(true) {
