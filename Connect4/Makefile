@@ -1,5 +1,5 @@
 all:
-	javac main.java
+	javac Main.java
 clean:
 	rm *.class
 

@@ -1,11 +1,10 @@
 import java.io.*;
-package Connect4;
 
 
 public class Board{
-    public const int rows = 7;
-    public const int cols = 6;
-    public int[][] table = new int[7][6];
+    public final static int rows = 7;
+    public final static int cols = 6;
+    public static int[][] table = new int[7][6];
 
     public Board()
     {
@@ -68,10 +67,5 @@ public class Board{
         }
     }
 
-    public static void main(String[] args)
-    {
-        Board b = new Board();
-        b.PrettyPrint();
-    }
 
 }

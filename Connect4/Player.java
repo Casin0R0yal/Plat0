@@ -1,7 +1,6 @@
 import java.io.*;
-package Connect4;
 
-public class Player(){
+public class Player {
 
     public String color;
     public int token;
@@ -11,8 +10,7 @@ public class Player(){
     {
         this.color = color;
         this.token = token;
-        Haswon = false;
-
+        HasWon = false;
     }
 
 }

@@ -1,23 +1,24 @@
-package Connect4;
 import java.io.DataInputStream;
+import java.util.Scanner;
+import java.io.*;
 
 public class Game{
-    
-    Board board;
-    Player player1;
-    Player player2;
-    
-    public Game(int[][] board){
-        Board = board;
-        player1 = new Player("red");
-        player2 = new Player("yellow");
+
+    public Board board;
+    public Player player1;
+    public Player player2;
+
+    public Game(Board board){
+        this.board = board;
+        player1 = new Player("red",1);
+        player2 = new Player("yellow",2);
     }
 
-    public static void CheckBoard()
+    public void CheckBoard()
     {
-        for(int i = 0; i < cols; i++)
+        for(int i = 0; i < board.cols; i++)
         {
-            for(int j = 0; j < rows; j++)
+            for(int j = 0; j < board.rows; j++)
             {
                 // check neighbours table[j][i]
             }
@@ -26,20 +27,20 @@ public class Game{
         // Declare if player has won
     }
 
-    public static boolean EndGame()
+    public boolean EndGame()
     {
-        if(player1.HasWon || player2.HasWon)
+        if(this.player1.HasWon || this.player2.HasWon)
             return true;
         else
             return false;
     }
 
-    public static boolean TieGame()
+    public boolean TieGame()
     {
         return board.IsFull();
     }
 
-    public static void makeRound()
+    public void makeRound()
     {
         Scanner sc = new Scanner(System.in);
 
@@ -47,17 +48,17 @@ public class Game{
         int x1 = sc.nextInt();
         int y1 = sc.nextInt();
 
-        player1.putCell(x1,y1);
+        board.PutCell(player1,x1,y1);
 
         System.out.println("Player 2, it's your turn.");
         int x2 = sc.nextInt();
         int y2 = sc.nextInt();
 
-        player2.putCell(x2, y2);
+        board.PutCell(player2,x2, y2);
 
     }
 
-    public static void Start()
+    public void Start()
     {
         if(EndGame())
         {
