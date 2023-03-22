@@ -1,4 +1,5 @@
 package Connect4;
+import java.io.DataInputStream;
 
 public class Game{
     
@@ -22,24 +23,55 @@ public class Game{
             }
             System.out.println();
         }
+        // Declare if player has won
     }
 
     public static boolean EndGame()
     {
-        if(board.IsFull)
-            return true;
-        else if(player1.HasWon || player2.HasWon)
+        if(player1.HasWon || player2.HasWon)
             return true;
         else
             return false;
     }
 
-    public makeMove()
+    public static boolean TieGame()
     {
+        return board.IsFull();
     }
 
-    public Start()
+    public static void makeRound()
     {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Player 1, it's your turn.");
+        int x1 = sc.nextInt();
+        int y1 = sc.nextInt();
+
+        player1.putCell(x1,y1);
+
+        System.out.println("Player 2, it's your turn.");
+        int x2 = sc.nextInt();
+        int y2 = sc.nextInt();
+
+        player2.putCell(x2, y2);
+
+    }
+
+    public static void Start()
+    {
+        if(EndGame())
+        {
+            System.out.println("It is the End.");
+            return;
+        }
+        if(TieGame())
+        {
+            System.out.println("It is a Tie. Start a new game !");
+            return;
+
+        }
+        makeRound();
+        Start();
     }
 
 }
