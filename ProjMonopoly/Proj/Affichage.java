@@ -16,6 +16,10 @@ import javax.swing.*;
 class Affichage extends JFrame {
     public static final int WINDOW_WIDTH = 1000;
     private static final int WINDOW_HEIGHT = 800;
+
+    // Create a JPanel to display the image
+    JPanel panel;
+
     private Image image;
     private Image player1;
     private Image player2;
@@ -43,11 +47,8 @@ class Affichage extends JFrame {
     private JLabel list3;
     private JLabel list4;
 
-    // Create a JPanel to display the image
-    JPanel panel;
-
     public Affichage(int playerId, int playerCount) {
-        panel = new JPanel() {
+        panel = new JPanel(null) {
             @Override
             public void paintComponent(Graphics g) {
                 super.paintComponent(g);
@@ -75,79 +76,57 @@ class Affichage extends JFrame {
         playerwidth = 30;
         playerheight = 30;
 
-        all = "player"+playerId+" case/nb of house/price: ";
+        all = "player"+playerId+" case/nb of house: ";
         // Create a button and add it to the JPanel
         playButton = new JButton("Play");
+        playButton.setBounds(WINDOW_WIDTH/2-50, WINDOW_HEIGHT/2-50, 100, 50);
         panel.add(playButton);
 
         Buy = new JButton("Buy");
+        Buy.setBounds(WINDOW_WIDTH/2-50, WINDOW_HEIGHT/2-50, 100, 50);
+        Buy.setVisible(false);
         panel.add(Buy);
 
         if (Server.PLAYER_MAX > 0) {
             player1 = Toolkit.getDefaultToolkit().getImage("player.png");
             player1 = player1.getScaledInstance(playerwidth, playerheight, Image.SCALE_SMOOTH);
             playerLabel1 = new JLabel(new ImageIcon(player1));
+            playerLabel1.setBounds(x, y, playerwidth, playerheight);
             panel.add(playerLabel1);
-            list1 = new JLabel("player1 case/nb of house/price: ");
+            list1 = new JLabel("player1 case/nb of house: ");
+            list1.setBounds(0, 670, 1000, 20);
             panel.add(list1);
         }
         if (Server.PLAYER_MAX > 1) {
             player2 = Toolkit.getDefaultToolkit().getImage("player.png");
             player2 = player2.getScaledInstance(playerwidth, playerheight, Image.SCALE_SMOOTH);
             playerLabel2 = new JLabel(new ImageIcon(player2));
+            playerLabel2.setBounds(x+5, y, playerwidth, playerheight);
             panel.add(playerLabel2);
-            list2 = new JLabel("player2 case/nb of house/price: ");
+            list2 = new JLabel("player2 case/nb of house: ");
+            list2.setBounds(0, 690, 1000, 20);
             panel.add(list2);
         }
         if (Server.PLAYER_MAX > 2) {
             player3 = Toolkit.getDefaultToolkit().getImage("player.png");
             player3 = player3.getScaledInstance(playerwidth, playerheight, Image.SCALE_SMOOTH);
             playerLabel3 = new JLabel(new ImageIcon(player3));
+            playerLabel3.setBounds(x, y-5, playerwidth, playerheight);
             panel.add(playerLabel3);
-            list3 = new JLabel("player3 case/nb of house/price: ");
+            list3 = new JLabel("player3 case/nb of house: ");
+            list3.setBounds(0, 20, 1000, 20);
             panel.add(list3);
         }
         if (Server.PLAYER_MAX > 3) {
             player4 = Toolkit.getDefaultToolkit().getImage("player.png");
             player4 = player4.getScaledInstance(playerwidth, playerheight, Image.SCALE_SMOOTH);
             playerLabel4 = new JLabel(new ImageIcon(player4));
+            playerLabel4.setBounds(x+5, y-5, playerwidth, playerheight);
             panel.add(playerLabel4);
-            list4 = new JLabel("player4 case/nb of house/price: ");
+            list4 = new JLabel("player4 case/nb of house: ");
+            list4.setBounds(0, 40, 1000, 20);
             panel.add(list4);
         }
-        
-        
-        // Add a ComponentListener to the JFrame to listen for componentResized events
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                // Resize the image to match the new size of the panel
-                image = image.getScaledInstance(panel.getWidth(), panel.getHeight(), Image.SCALE_SMOOTH);
-                imageWidth = image.getWidth(null);
-                imageHeight = image.getHeight(null);
-                
-                // Reposition the button to the center of the panel
-                playButton.setBounds(panel.getWidth()/2 - 50, panel.getHeight()/2 - 25, 100, 50);
-                Buy.setBounds(panel.getWidth()/2 - 50, panel.getHeight()/2 - 25, 100, 50);
-                if (Server.PLAYER_MAX > 0) {
-                    list1.setBounds(170, 670, 500, 20);
-                    playerLabel1.setBounds(x, y, playerwidth, playerheight);
-                }
-                if (Server.PLAYER_MAX > 1) {
-                    list2.setBounds(170, 690, 500, 20);
-                    playerLabel2.setBounds(x+5, y, playerwidth, playerheight);
-                }
-                if (Server.PLAYER_MAX > 2) {
-                    list3.setBounds(170, 20, 500, 20);
-                    playerLabel3.setBounds(x, y-5, playerwidth, playerheight);
-                }
-                if (Server.PLAYER_MAX > 3) {
-                    list4.setBounds(170, 40, 500, 20);
-                    playerLabel4.setBounds(x+5, y-5, playerwidth, playerheight);
-                }
-                repaint();
-            }
-        });
 
         // Add an ActionListener to the button to handle click events
         playButton.addActionListener(new ActionListener() {
@@ -237,7 +216,7 @@ class Affichage extends JFrame {
 
     //Draw the case of the player
     public void AddCase(Case c) {
-        all += " n"+c.position+"/0/"+c.price;
+        all += " n"+c.position+"/0";
         for (Player player : Server.players) {
             if (playerId == 0) {
                 player.affichage.list1.setText(all);
