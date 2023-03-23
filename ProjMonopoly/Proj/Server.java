@@ -9,8 +9,9 @@ public class Server {
 
     static List<Player> players = new ArrayList<Player>();
     static List<Integer> positions = new ArrayList<Integer>();
-    static int PLAYER_MAX = 2;
+    static int PLAYER_MAX = 1;
     static int currentPlayer = 0;
+    static Board board = new Board();
 
     public void Connection() throws IOException {
         ServerSocket serverSocket = null;

@@ -2,12 +2,16 @@ package Proj;
 
 import java.net.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
     static Socket socket = null;
     static PrintWriter out = null;
     static BufferedReader in = null;
     public Affichage affichage;
+    public List<Case> cases = new ArrayList<Case>();
+    public int number = 0;
 
     public static void PlayButton() throws IOException {
         System.out.println("Player.PlayButton  active");
