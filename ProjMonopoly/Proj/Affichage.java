@@ -36,6 +36,7 @@ class Affichage extends JFrame {
     int playerCount = 0;
     JButton playButton;
     JButton Buy;
+    JButton Gamble;
     JLabel playerLabel1;
     JLabel playerLabel2;
     JLabel playerLabel3;
@@ -83,9 +84,14 @@ class Affichage extends JFrame {
         panel.add(playButton);
 
         Buy = new JButton("Buy");
-        Buy.setBounds(WINDOW_WIDTH/2-50, WINDOW_HEIGHT/2-50, 100, 50);
+        Buy.setBounds(WINDOW_WIDTH/2-100, WINDOW_HEIGHT/2-50, 100, 50);
         Buy.setVisible(false);
         panel.add(Buy);
+
+        Gamble = new JButton("Gamble");
+        Gamble.setBounds(WINDOW_WIDTH/2, WINDOW_HEIGHT/2-50, 100, 50);
+        Gamble.setVisible(false);
+        panel.add(Gamble);
 
         if (Server.PLAYER_MAX > 0) {
             player1 = Toolkit.getDefaultToolkit().getImage("player.png");
@@ -145,6 +151,7 @@ class Affichage extends JFrame {
                         }
                         playButton.setVisible(false);
                         Buy.setVisible(true);
+                        Gamble.setVisible(true);
                         repaint();
                     }
                     else {
@@ -160,6 +167,7 @@ class Affichage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Buy.setVisible(false);
+                Gamble.setVisible(false);
                 playButton.setVisible(true);
                 repaint();
                 Server.currentPlayer = (Server.currentPlayer + 1) % playerCount;
