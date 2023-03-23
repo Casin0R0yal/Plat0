@@ -33,7 +33,7 @@ public class commission {
         traduction[] trad = {
             new traduction() { public void perform(board b, player[] p, int i) { p[i].setPosition(0); b.getbox(0).action.perform(b, p, i);} },
             new traduction() { public void perform(board b, player[] p, int i) { p[i].addMoney(200); } },
-            new traduction() { public void perform(board b, player[] p, int i) { p[i].retrieveMoney(100);}},
+            new traduction() { public void perform(board b, player[] p, int i) { p[i].removeMoney(100);}},
             new traduction() { public void perform(board b, player[] p, int i) { p[i].addMoney(100); } },
             new traduction() { public void perform(board b, player[] p, int i) { p[i].setJailCard(true); } },
             new traduction() { public void perform(board b, player[] p, int i) { p[i].GoToJail(); } },
@@ -41,15 +41,15 @@ public class commission {
             new traduction() { public void perform(board b, player[] p, int i) { p[i].addMoney(200); } },
             new traduction() { public void perform(board b, player[] p, int i) {
                 int lon = p.length;
-                for(int j = 0; j < lon; j++) { if (j != i && p[i].getMoney()<100) {p[i].retrieveMoney(100);
+                for(int j = 0; j < lon; j++) { if (j != i && p[i].getMoney()<100) {p[i].removeMoney(100);
                 p[i].addMoney(100*(lon-1));}}}},
             new traduction() { public void perform(board b, player[] p, int i) { p[i].addMoney(200); } },
             new traduction() { public void perform(board b, player[] p, int i) { p[i].addMoney(250); } },
-            new traduction() { public void perform(board b, player[] p, int i) { p[i].retrieveMoney(150);}},
+            new traduction() { public void perform(board b, player[] p, int i) { p[i].removeMoney(150);}},
             new traduction() { public void perform(board b, player[] p, int i) {
                 if(p[i].getMoney()>=100 && System.console().readLine().equals("1")) {
-                    p[i].retrieveMoney(100);}
-                else { p[i].onLuck(b,p,i); } } },
+                    p[i].removeMoney(100);}
+                else { luck x = new luck(); x.onLuck(b,p,i); } } },
             new traduction() { public void perform(board b, player[] p, int i) { int pos = p[i].getPosition();
                 if(pos < 5) { p[i].setPosition(5);b.getbox(5).action.perform(b, p, i);}
                 else if(pos < 15) { p[i].setPosition(15);b.getbox(15).action.perform(b, p, i);}
