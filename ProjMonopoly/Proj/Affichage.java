@@ -1,6 +1,7 @@
 package Proj;
 
 import java.util.Random;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -43,20 +44,21 @@ class Affichage extends JFrame {
     private JLabel list4;
 
     // Create a JPanel to display the image
-    JPanel panel = new JPanel() {
-        @Override
-        public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
-        }
-
-        @Override
-        public Dimension getPreferredSize() {
-            return new Dimension(imageWidth, imageHeight);
-        }
-    };
+    JPanel panel;
 
     public Affichage(int playerId, int playerCount) {
+        panel = new JPanel() {
+            @Override
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+            }
+    
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(imageWidth, imageHeight);
+            }
+        };
         this.playerCount = playerCount;
         this.playerId = playerId;
         setTitle("Monopoly");
@@ -114,9 +116,6 @@ class Affichage extends JFrame {
             panel.add(list4);
         }
         
-        // Set the position of the button to the center of the JPanel
-        playButton.setBounds(panel.getWidth()/2 - 50, panel.getHeight()/2 - 25, 100, 50);
-        Buy.setBounds(panel.getWidth()/2 - 50, panel.getHeight()/2 - 25, 0, 0);
         
         // Add a ComponentListener to the JFrame to listen for componentResized events
         addComponentListener(new ComponentAdapter() {
@@ -129,7 +128,7 @@ class Affichage extends JFrame {
                 
                 // Reposition the button to the center of the panel
                 playButton.setBounds(panel.getWidth()/2 - 50, panel.getHeight()/2 - 25, 100, 50);
-                Buy.setBounds(panel.getWidth()/2 - 50, panel.getHeight()/2 - 25, 0, 0);
+                Buy.setBounds(panel.getWidth()/2 - 50, panel.getHeight()/2 - 25, 100, 50);
                 if (Server.PLAYER_MAX > 0) {
                     list1.setBounds(170, 670, 500, 20);
                     playerLabel1.setBounds(x, y, playerwidth, playerheight);
@@ -165,8 +164,9 @@ class Affichage extends JFrame {
                         for (Player player : Server.players) {
                             ActPlayers(player, playerId);
                         }
-                        Buy.setBounds(panel.getWidth()/2 - 50, panel.getHeight()/2 - 25, 100, 50);
-                        playButton.setBounds(panel.getWidth()/2 - 50, panel.getHeight()/2 - 25, 0, 0);
+                        playButton.setVisible(false);
+                        Buy.setVisible(true);
+                        repaint();
                     }
                     else {
                         System.out.println("It is not your turn");
@@ -180,8 +180,9 @@ class Affichage extends JFrame {
         Buy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                playButton.setBounds(panel.getWidth()/2 - 50, panel.getHeight()/2 - 25, 100, 50);
-                Buy.setBounds(panel.getWidth()/2 - 50, panel.getHeight()/2 - 25, 0, 0);
+                Buy.setVisible(false);
+                playButton.setVisible(true);
+                repaint();
                 Server.currentPlayer = (Server.currentPlayer + 1) % playerCount;
                 for (Case c : Board.cases) {
                     if (c.position == Server.positions.get(playerId)) {
@@ -203,7 +204,7 @@ class Affichage extends JFrame {
         });
 
         // Add the JPanel to the JFrame and display it
-        add(panel);
+        add(panel, BorderLayout.CENTER);
         setVisible(true);
     }
 
