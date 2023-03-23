@@ -4,15 +4,14 @@ public class stations extends box {
     int price;
     color color;
     // 0 [rent with nothing,
-    // 1 rent with all the group,
-    // 2 rent with 1 house,
-    // 3 rent with 2 houses,
-    // 4 rent with 3 houses,
-    // 5 rent with 4 houses,
-    // 6 rent with hotel,
-    // 7 price of a house,
-    // 8 price of a hotel,
-    // 9 remove the mortgage]
+    // 1 rent with 1 house,
+    // 2 rent with 2 houses,
+    // 3 rent with 3 houses,
+    // 4 rent with 4 houses,
+    // 5 rent with hotel,
+    // 6 price of a house,
+    // 7 price of a hotel,
+    // 8 remove the mortgage]
     int[] rent;
     player owner;
     Boolean mortgaged;
@@ -32,7 +31,7 @@ public class stations extends box {
     }
     public Boolean isMortgaged() { return mortgaged; }
     public void removeProperty(player i) {
-        i.removeProperty(price);
+        i.removeProperty(this);
         owner = null;
     }
 
@@ -55,7 +54,7 @@ public class stations extends box {
         {
             System.out.println("\n"+lp[i].getName()+", do you want to buy "+p.name+" for "+"\u001B[9m"+"M"+"\u001B[0m"+p.price+" ? (y/n)");
             if(System.console().readLine().equals("y")) {
-                lp[i].retrieveMoney(p.price);
+                lp[i].removeMoney(p.price);
                 lp[i].addPatrimony(p.price/2);
                 lp[i].addProperty(p);
                 p.owner = lp[i];
@@ -69,11 +68,15 @@ public class stations extends box {
     }
 
     private static int payOwner(stations p, player i) {
-        System.out.println("Roll the dice to pay "+p.rent[p.owner.getNbUtilities()]+" times the result to "+p.owner.getName()+".");
-        System.console().readLine();
         int price;
-        if (p.type == Monopoly.type.COMPANIES) {price = p.rent[p.owner.getNbUtilities()];dice.roll();} 
-        else {price = p.rent[p.owner.getNbTrainStations()];}
+        if (p.type == Monopoly.type.COMPANIES) {
+            System.out.println("Roll the dice to pay "+p.rent[p.owner.getNbUtilities()-1]+" times the result to "+p.owner.getName()+".");
+            price = p.rent[p.owner.getNbUtilities()-1] * dice.roll(i);
+            System.console().readLine();
+        } 
+        else {
+            price = p.rent[p.owner.getNbTrainStations()-1];
+        }
         int recu = i.payOwner(price, p.owner.getName());
         p.owner.addMoney(recu);
         return recu;
@@ -108,7 +111,7 @@ public class stations extends box {
             if (alone) {winner = j; break;}
         }
         if(max == 0) {max = 1;}
-        p[winner].retrieveMoney(max);
+        p[winner].removeMoney(max);
         p[winner].addPatrimony(price/2);
         p[winner].addProperty(this);
         owner = p[winner];

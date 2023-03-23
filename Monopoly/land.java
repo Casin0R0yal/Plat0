@@ -32,7 +32,7 @@ public class land extends stations {
     }
     public Boolean isMortgaged() { return mortgaged; }
     public void removeProperty(player i) {
-        i.removeProperty(price);
+        i.removeProperty(this);
         owner = null;
     }
 
@@ -53,7 +53,7 @@ public class land extends stations {
         {
             System.out.println("\n"+lp[i].getName()+", do you want to buy "+p.name+" for "+"\u001B[9m"+"M"+"\u001B[0m"+p.price+" ? (y/n)");
             if(System.console().readLine().equals("y")) {
-                lp[i].retrieveMoney(p.price);
+                lp[i].removeMoney(p.price);
                 lp[i].addPatrimony(p.price/2);
                 lp[i].addProperty(p);
                 p.owner = lp[i];
@@ -66,7 +66,9 @@ public class land extends stations {
         return 1;
     }
     private static int payOwner(land p, player i) {
-        int recu = i.payOwner(p.rent[p.getNbHouses()], p.owner.getName());
+        int recu;
+        if(p.getNbHouses()==0){recu = i.payOwner(p.rent[0]*(p.getCanBuild()?2:1), p.owner.getName());}
+        else{recu = i.payOwner(p.rent[p.getNbHouses()], p.owner.getName());}
         p.owner.addMoney(recu);
         return recu;
     }
@@ -101,7 +103,7 @@ public class land extends stations {
             if (alone) {winner = j; break;}
         }
         if(max == 0) {max = 1;}
-        p[winner].retrieveMoney(max);
+        p[winner].removeMoney(max);
         p[winner].addPatrimony(price/2);
         p[winner].addProperty(this);
         owner = p[winner];

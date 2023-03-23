@@ -3,25 +3,25 @@ package Monopoly;
 public class monopoly {
     public static void main(String[] args) {
         monopoly m = new monopoly();
-        m.Play();
+        m.PlayPay();
     }
     public void Play() {
         board b = new board();
-        String[] names = {"Khaled", "Arthur"};
+        String[] names = {"Player 1", "Player 2", "Player 3"};
         player[] p = new player[names.length];
         for (int i = 0; i < names.length; i++) {p[i] = new player(names[i]);}
         while(true) {
             for (int i = 0; i < p.length; i++) {
-                int play = 1;
-                while (play>0) {
+                while (p[i].getPlay()>0) {
                     board.printBoard(p);
-                    p[i].play(b);
-                    play += p[i].move(p);
+                    p[i].play(b,p);
+                    p[i].move(p);
                     board.printBoard(p);
                     b.getbox(p[i].getPosition()).action.perform(b,p,i);
-                    play--;
+                    p[i].removePlay();
                 }
                 System.console().readLine();
+                p[i].addPlay();
             }
         }
     }
@@ -39,29 +39,32 @@ public class monopoly {
             b.getbox(i).action.perform(b,p,1);
         }
         p[1].setPosition(1);
-        p[1].retrieveMoney(p[1].getMoney());
+        p[1].removeMoney(p[1].getMoney());
         b.getbox(1).action.perform(b,p,1);
     }
-    public void PlayBuild() {
+
+    public void PlayPay() {
         board b = new board();
         String[] names = {"Player 1", "Player 2", "Player 3"};
         player[] p = new player[names.length];
         for (int i = 0; i < names.length; i++) {p[i] = new player(names[i]);}
-        for (int i : new int[]{1,3,6,8,9,11,13,14}) {
+        for (int i : new int[]{1,3,6,8,9,12,28,5,15,25,35}) {
+            board.printBoard(p);
             p[0].setPosition(i);
             b.getbox(i).action.perform(b,p,0);
-            p[0].addMoney(1000);
+            p[0].addMoney(500);
         }
-        while(true) {
-            int play = 1;
-            while (play>0) {
-                board.printBoard(p);
-                p[0].play(b);
-                play += p[0].move(p);
-                board.printBoard(p);
-                b.getbox(p[0].getPosition()).action.perform(b,p,0);
-                play--;
-            }
+
+        board.printBoard(p);
+        p[0].play(b,p);
+        p[0].move(p);
+        board.printBoard(p);
+        b.getbox(p[0].getPosition()).action.perform(b,p,0);
+        p[0].removePlay();
+
+        for (int i : new int[]{3,9,12,15}) {
+            p[1].setPosition(i);
+            b.getbox(i).action.perform(b,p,1);
         }
     }
 }

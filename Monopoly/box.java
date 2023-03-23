@@ -15,5 +15,5 @@ public class box {
         action = Action;
     }
     public int mortgage(Boolean fake) {return 0; }
-    public Boolean isMortgaged() { return false; }
+    // public Boolean isMortgaged() { return false; }
 }

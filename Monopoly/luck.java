@@ -41,7 +41,7 @@ public class luck {
                 for(int j=0; j<p[i].getNbProperties();j++){
                     if(p[i].getProperties(j).type==type.LAND) { land pr = p[i].getLand(j);
                     try{if(pr.getNbHotels()==1){nbHotel++;}else{nbMaison+=pr.getNbHouses();}}catch(Exception e){}}}
-                nbMaison = nbMaison*100 + nbHotel*150; p[i].retrieveMoney(nbMaison);}},
+                nbMaison = nbMaison*100 + nbHotel*150; p[i].removeMoney(nbMaison);}},
             new traduction() {public void perform(board b, player[] p, int i) {
                 if (p[i].getPosition()>5) {p[i].addMoney(200);}p[i].setPosition(5);b.getbox(5).action.perform(b, p, i);} },
             new traduction() {public void perform(board b, player[] p, int i) {p[i].addMoney(100);} },
@@ -57,10 +57,10 @@ public class luck {
                 for(int j=0; j<p[i].getNbProperties();j++){
                     if(p[i].getProperties(j).type==type.LAND) { land pr = p[i].getLand(j);
                     try{if(pr.getNbHotels()==1){nbHotel++;}else{nbMaison+=pr.getNbHouses();}}catch(Exception e){}}}
-                nbMaison = nbMaison*100 + nbHotel*150; p[i].retrieveMoney(nbMaison);}},
-            new traduction() {public void perform(board b, player[] p, int i) { p[i].retrieveMoney(50);}},
-            new traduction() {public void perform(board b, player[] p, int i) { p[i].retrieveMoney(100);}},
-            new traduction() {public void perform(board b, player[] p, int i) { p[i].retrieveMoney(100);}},
+                nbMaison = nbMaison*100 + nbHotel*150; p[i].removeMoney(nbMaison);}},
+            new traduction() {public void perform(board b, player[] p, int i) { p[i].removeMoney(50);}},
+            new traduction() {public void perform(board b, player[] p, int i) { p[i].removeMoney(100);}},
+            new traduction() {public void perform(board b, player[] p, int i) { p[i].removeMoney(100);}},
             new traduction() {public void perform(board b, player[] p, int i) {p[i].addMoney(200);} }
             };
 		Random rand = new Random();
