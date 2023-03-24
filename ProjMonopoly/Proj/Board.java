@@ -2,8 +2,6 @@ package Proj;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.awt.Image;
-import java.awt.Toolkit;
 
 class Case {
     public int price;

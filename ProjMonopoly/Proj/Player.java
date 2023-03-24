@@ -11,7 +11,7 @@ public class Player {
     static BufferedReader in = null;
     public Affichage affichage;
     public List<Case> cases = new ArrayList<Case>();
-    public int number = 0;
+    public int sold = 1500;
 
     public static void PlayButton() throws IOException {
         System.out.println("Player.PlayButton  active");
