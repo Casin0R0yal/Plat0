@@ -3,7 +3,7 @@ package Monopoly;
 public class monopoly {
     public static void main(String[] args) {
         monopoly m = new monopoly();
-        m.PlayPay();
+        m.Play();
     }
     public void Play() {
         board b = new board();
