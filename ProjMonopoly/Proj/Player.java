@@ -13,6 +13,7 @@ public class Player {
     public List<Case> cases = new ArrayList<Case>();
     public int sold = 1500;
     public boolean bankrupt;
+    public boolean inJail = false;
 
     public static void PlayButton() throws IOException {
         System.out.println("Player.PlayButton  active");

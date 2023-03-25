@@ -1,10 +1,12 @@
 package Proj;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.List;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,7 +40,9 @@ class Affichage extends JFrame {
     JButton Bid;
     JButton BidNumber;
     JButton Sell;
+    JButton Jail;
 
+    int injail = 0;
     int BidAmount;
 
     JLabel playerLabel1;
@@ -114,6 +118,11 @@ class Affichage extends JFrame {
         Sell.setVisible(false);
         panel.add(Sell);
 
+        Jail = new JButton("Jail");
+        Jail.setBounds(WINDOW_WIDTH/2-50, WINDOW_HEIGHT/2+100, 100, 50);
+        Jail.setVisible(false);
+        panel.add(Jail);
+
         if (Server.PLAYER_MAX > 0) {
             player1 = Toolkit.getDefaultToolkit().getImage("player.png");
             player1 = player1.getScaledInstance(playerwidth, playerheight, Image.SCALE_SMOOTH);
@@ -160,6 +169,7 @@ class Affichage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    // if it is the player's turn
                     if (playerId == Server.currentPlayer) {
                         int temp = 0;
                         for (Player player : Server.players) {
@@ -167,6 +177,7 @@ class Affichage extends JFrame {
                                 temp++;
                             }
                         }
+                        // if there is only one player left
                         if (temp == 1) {
                             for (Player player : Server.players) {
                                 if (!player.bankrupt) {
@@ -177,29 +188,63 @@ class Affichage extends JFrame {
                             }
                         }
                         else {
-                            System.out.println("It is your turn");
-                            Random rand = new Random();
-                            int pos = rand.nextInt(5) + 1;
-                            Server.positions.set(playerId, (Server.positions.get(playerId) + pos) % 40);
-                            System.out.println(Server.positions.get(playerId));
-                            ChangePosition();
-                            for (Player player : Server.players) {
-                                player.affichage.message.setVisible(false);
-                                ActPlayers(player, playerId);
+                            // if the player is in jail
+                            if (Server.players.get(playerId).inJail && injail != 3) {
+                                System.out.println("You are in jail");
+                                message.setText("You are in jail");
+                                message.setVisible(true);
+                                Jail.setVisible(true);
+                                playButton.setVisible(false);
+                                repaint();
                             }
-                            for (Case c : Board.cases) {
-                                if (c.position == Server.positions.get(playerId)) {
-                                    if (c.owner == null) {
-                                        Buy.setVisible(true);
-                                        Bid.setVisible(true);
-                                        playButton.setVisible(false);
-                                        repaint();
-                                    }
-                                    else {
-                                        message.setText("You payed " + c.price + " to " + c.owner);
-                                        message.setVisible(true);
-                                        DisplayPaySomebody(c);
-                                        repaint();
+                            else {
+                                if (injail == 3) {
+                                    message.setText("You are from too long in jail");
+                                    message.setVisible(true);
+                                    Server.players.get(playerId).inJail = false;
+                                    injail = 0;
+                                }
+                                System.out.println("It is your turn");
+                                Random rand = new Random();
+                                int pos = rand.nextInt(5) + 1;
+                                if (pos+Server.positions.get(playerId) > 40) {
+                                    Server.players.get(playerId).sold += 200;
+                                }
+                                Server.positions.set(playerId, (Server.positions.get(playerId) + pos) % 40);
+                                System.out.println(Server.positions.get(playerId));
+                                ChangePosition();
+                                for (Player player : Server.players) {
+                                    player.affichage.message.setVisible(false);
+                                    ActPlayers(player, playerId);
+                                }
+                                for (Case c : Board.cases) {
+                                    if (c.position == Server.positions.get(playerId)) {
+                                        if (c.position == 30) {
+                                            Server.positions.set(playerId, 10);
+                                            ChangePosition();
+                                            for (Player player : Server.players) {
+                                                ActPlayers(player, playerId);
+                                            }
+                                            Server.players.get(playerId).inJail = true;
+                                            Server.currentPlayer = nextplayer();
+                                            message.setText("You are in jail");
+                                            message.setVisible(true);
+                                            repaint();
+                                        }
+                                        else {
+                                            if (c.owner == null) {
+                                                Buy.setVisible(true);
+                                                Bid.setVisible(true);
+                                                playButton.setVisible(false);
+                                                repaint();
+                                            }
+                                            else {
+                                                message.setText("You payed " + c.price + " to " + c.owner);
+                                                message.setVisible(true);
+                                                DisplayPaySomebody(c);
+                                                repaint();
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -344,6 +389,48 @@ class Affichage extends JFrame {
             }
         });
 
+        // the player is in jail, he can, pay the fine, use a card or roll the dice
+        Jail.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String input = JOptionPane.showInputDialog("1/pay 2/card 3/roll");
+                try{
+                    int number = Integer.parseInt(input);
+                    if (number == 1) {
+                        injail = 0;
+                        Server.players.get(playerId).sold -= 50;
+                        Server.players.get(playerId).inJail = false;
+                    }
+                    else if (number == 2) {
+                        injail = 0;
+                        Server.players.get(playerId).inJail = false;
+                    }
+                    else if (number == 3) {
+                        Random rand = new Random();
+                        int dice1 = rand.nextInt(5) + 1;
+                        int dice2 = rand.nextInt(5) + 1;
+                        if (dice1 == dice2) {
+                            message.setText("You rolled " + dice1 + " and " + dice2 + " you are free to replay");
+                            message.setVisible(true);
+                            Server.players.get(playerId).inJail = false;
+                            injail = 0;
+                        }
+                        else {
+                            injail++;
+                            message.setText("You rolled " + dice1 + " and " + dice2 + " you are still in jail");
+                            message.setVisible(true);
+                            Server.players.get(playerId).inJail = true;
+                            Server.currentPlayer = nextplayer();
+                        }
+                    }
+                    Jail.setVisible(false);
+                    playButton.setVisible(true);
+                } catch (NumberFormatException ex) {
+                    // Si l'utilisateur a entré une valeur qui n'est pas un chiffre, afficher une boîte de dialogue d'erreur
+                    JOptionPane.showMessageDialog(null, "Veuillez entrer un chiffre valide.");
+                }
+            }
+        });
 
         
 

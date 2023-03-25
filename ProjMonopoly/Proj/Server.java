@@ -12,6 +12,7 @@ public class Server {
     static int PLAYER_MAX = 2;
     static int currentPlayer = 0;
     static Board board = new Board();
+    static Luck luck = new Luck();
 
     public void Connection() throws IOException {
         ServerSocket serverSocket = null;
