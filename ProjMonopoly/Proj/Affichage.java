@@ -37,6 +37,7 @@ class Affichage extends JFrame {
     JButton Buy;
     JButton Bid;
     JButton BidNumber;
+    JButton Sell;
 
     int BidAmount;
 
@@ -47,6 +48,7 @@ class Affichage extends JFrame {
 
     JLabel message;
 
+    private String allproperties;
     private String all;
     private JLabel list1;
     private JLabel list2;
@@ -85,7 +87,8 @@ class Affichage extends JFrame {
         message.setBounds(WINDOW_WIDTH/2-50,WINDOW_HEIGHT/2, 300, 20);
         message.setVisible(false);
         panel.add(message);
-        all = "player"+(playerId+1)+" case/nb of house: ";
+        allproperties = "$ case/nb of house: ";
+        all = "player"+(playerId+1)+" with 1500"+allproperties;
         // Create a button and add it to the JPanel
         playButton = new JButton("Play");
         playButton.setBounds(WINDOW_WIDTH/2-50, WINDOW_HEIGHT/2-50, 100, 50);
@@ -106,13 +109,18 @@ class Affichage extends JFrame {
         BidNumber.setVisible(false);
         panel.add(BidNumber);
 
+        Sell = new JButton("Sell");
+        Sell.setBounds(WINDOW_WIDTH/2-50, WINDOW_HEIGHT/2+50, 100, 50);
+        Sell.setVisible(false);
+        panel.add(Sell);
+
         if (Server.PLAYER_MAX > 0) {
             player1 = Toolkit.getDefaultToolkit().getImage("player.png");
             player1 = player1.getScaledInstance(playerwidth, playerheight, Image.SCALE_SMOOTH);
             playerLabel1 = new JLabel(new ImageIcon(player1));
             playerLabel1.setBounds(x, y, playerwidth, playerheight);
             panel.add(playerLabel1);
-            list1 = new JLabel("player1 case/nb of house: ");
+            list1 = new JLabel("player1 with 1500$ case/nb of house: ");
             list1.setBounds(0, 670, 1000, 20);
             panel.add(list1);
         }
@@ -122,7 +130,7 @@ class Affichage extends JFrame {
             playerLabel2 = new JLabel(new ImageIcon(player2));
             playerLabel2.setBounds(x+5, y, playerwidth, playerheight);
             panel.add(playerLabel2);
-            list2 = new JLabel("player2 case/nb of house: ");
+            list2 = new JLabel("player2 with 1500$ case/nb of house: ");
             list2.setBounds(0, 690, 1000, 20);
             panel.add(list2);
         }
@@ -132,7 +140,7 @@ class Affichage extends JFrame {
             playerLabel3 = new JLabel(new ImageIcon(player3));
             playerLabel3.setBounds(x, y-5, playerwidth, playerheight);
             panel.add(playerLabel3);
-            list3 = new JLabel("player3 case/nb of house: ");
+            list3 = new JLabel("player3 with 1500$ case/nb of house: ");
             list3.setBounds(0, 20, 1000, 20);
             panel.add(list3);
         }
@@ -142,42 +150,57 @@ class Affichage extends JFrame {
             playerLabel4 = new JLabel(new ImageIcon(player4));
             playerLabel4.setBounds(x+5, y-5, playerwidth, playerheight);
             panel.add(playerLabel4);
-            list4 = new JLabel("player4 case/nb of house: ");
+            list4 = new JLabel("player4 with 1500$ case/nb of house: ");
             list4.setBounds(0, 40, 1000, 20);
             panel.add(list4);
         }
 
-        // Add an ActionListener to the button to handle click events
+        // the player plays his turn
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     if (playerId == Server.currentPlayer) {
-                        System.out.println("It is your turn");
-                        Random rand = new Random();
-                        int pos = rand.nextInt(5) + 1;
-                        Server.positions.set(playerId, (Server.positions.get(playerId) + pos) % 40);
-                        System.out.println(Server.positions.get(playerId));
-                        ChangePosition();
+                        int temp = 0;
                         for (Player player : Server.players) {
-                            player.affichage.message.setVisible(false);
-                            ActPlayers(player, playerId);
+                            if (!player.bankrupt) {
+                                temp++;
+                            }
                         }
-                        for (Case c : Board.cases) {
-                            if (c.position == Server.positions.get(playerId)) {
-                                if (c.owner == null) {
-                                    Buy.setVisible(true);
-                                    Bid.setVisible(true);
-                                    playButton.setVisible(false);
+                        if (temp == 1) {
+                            for (Player player : Server.players) {
+                                if (!player.bankrupt) {
+                                    message.setText("Player " + (playerId + 1) + " won the game");
+                                    message.setVisible(true);
                                     repaint();
                                 }
-                                else {
-                                    Server.currentPlayer = (Server.currentPlayer + 1) % playerCount;
-                                    message.setText("You payed " + c.price + " to " + c.owner);
-                                    message.setVisible(true);
-                                    Server.players.get(playerId).sold -= c.price;
-                                    c.owner.sold += c.price;
-                                    repaint();
+                            }
+                        }
+                        else {
+                            System.out.println("It is your turn");
+                            Random rand = new Random();
+                            int pos = rand.nextInt(5) + 1;
+                            Server.positions.set(playerId, (Server.positions.get(playerId) + pos) % 40);
+                            System.out.println(Server.positions.get(playerId));
+                            ChangePosition();
+                            for (Player player : Server.players) {
+                                player.affichage.message.setVisible(false);
+                                ActPlayers(player, playerId);
+                            }
+                            for (Case c : Board.cases) {
+                                if (c.position == Server.positions.get(playerId)) {
+                                    if (c.owner == null) {
+                                        Buy.setVisible(true);
+                                        Bid.setVisible(true);
+                                        playButton.setVisible(false);
+                                        repaint();
+                                    }
+                                    else {
+                                        message.setText("You payed " + c.price + " to " + c.owner);
+                                        message.setVisible(true);
+                                        DisplayPaySomebody(c);
+                                        repaint();
+                                    }
                                 }
                             }
                         }
@@ -191,6 +214,7 @@ class Affichage extends JFrame {
             }
         });
 
+        // the player can buy the property directly
         Buy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -202,7 +226,7 @@ class Affichage extends JFrame {
                             Bid.setVisible(false);
                             playButton.setVisible(true);
                             repaint();
-                            Server.currentPlayer = (Server.currentPlayer + 1) % playerCount;
+                            Server.currentPlayer = nextplayer();
                             if (c.owner == null) {
                                 c.owner = Server.players.get(playerId);
                                 System.out.println("You bought " + c.name);
@@ -220,9 +244,11 @@ class Affichage extends JFrame {
             }
         });
 
+        // when a case is not owned, the player can bid for it and the highest bidder wins
         Bid.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Server.currentPlayer = nextplayer();
                 Buy.setVisible(false);
                 Bid.setVisible(false);
                 for (Player player : Server.players) {
@@ -236,6 +262,7 @@ class Affichage extends JFrame {
             }
         });
 
+        // the bid is open until all players have bid
         BidNumber.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -266,16 +293,53 @@ class Affichage extends JFrame {
                                 if (c.position == Server.positions.get(Server.currentPlayer)) {
                                     c.owner = Server.players.get(temp3);
                                     System.out.println("player"+temp3+" bought " + c.name);
+                                    Server.players.get(temp3).sold -= temp2;
                                     AddCase(c, temp3);
                                 }
                             }
-                            Server.currentPlayer = (Server.currentPlayer + 1) % playerCount;
                         }
                     }
                     // Faites quelque chose avec le chiffre ici
                 } catch (NumberFormatException ex) {
                     // Si l'utilisateur a entré une valeur qui n'est pas un chiffre, afficher une boîte de dialogue d'erreur
                     JOptionPane.showMessageDialog(null, "Veuillez entrer un chiffre valide.");
+                }
+            }
+        });
+
+        // the player have to sell some properties to pay the rent
+        Sell.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int temp = 0;
+                for (Case c : Board.cases) {
+                    if (c.owner == Server.players.get(playerId)) {
+                        temp = 1;
+                    }
+                }
+                // the player has lost if he has no properties
+                if (temp == 0) {
+                    System.out.println("You lose");
+                    Server.players.get(playerId).bankrupt = true;
+                    Server.currentPlayer = nextplayer();
+                    Sell.setVisible(false);
+                }
+                else {
+                    String input = JOptionPane.showInputDialog("Veuillez entrer un chiffre:");
+                    try{
+                        int number = Integer.parseInt(input);
+                        if (Board.cases.get(number).owner == Server.players.get(playerId)) {
+                            Server.players.get(playerId).sold += Board.cases.get(number).price;
+                            Board.cases.get(number).owner = null;
+                            RemoveCase(Board.cases.get(number), playerId);
+                            DisplayPaySomebody(Board.casesell);
+                            repaint();
+                        }
+
+                    } catch (NumberFormatException ex) {
+                        // Si l'utilisateur a entré une valeur qui n'est pas un chiffre, afficher une boîte de dialogue d'erreur
+                        JOptionPane.showMessageDialog(null, "Veuillez entrer un chiffre valide.");
+                    }
                 }
             }
         });
@@ -288,6 +352,7 @@ class Affichage extends JFrame {
         setVisible(true);
     }
 
+    // change the position of the player
     public void ChangePosition() {
         int pos = Server.positions.get(playerId);
         int val = 0;
@@ -315,9 +380,62 @@ class Affichage extends JFrame {
         }
     }
 
-    //Draw the case of the player
+    public int nextplayer() {
+        int res = (playerId + 1) % playerCount;
+        while (Server.players.get(res).bankrupt) {
+            res = (res + 1) % playerCount;
+        }
+        return res;
+    }
+
+    //Display and change the sold of the owner and the visiter of the case price
+    public void DisplayPaySomebody(Case c){
+        if (Server.players.get(playerId).sold < c.price) {
+            Board.casesell = c;
+            Sell.setVisible(true);
+            playButton.setVisible(false);
+        }
+        else {
+            Sell.setVisible(false);
+            playButton.setVisible(true);
+            Server.players.get(c.owner.affichage.playerId).sold += c.price;
+            Server.players.get(playerId).sold -= c.price;
+            Server.players.get(c.owner.affichage.playerId).affichage.all = "player"+(c.owner.affichage.playerId+1)+" with "+Server.players.get(c.owner.affichage.playerId).sold+c.owner.affichage.allproperties;
+            Server.players.get(playerId).affichage.all = "player"+(playerId+1)+" with "+Server.players.get(playerId).sold+allproperties;
+            for (Player player : Server.players) {
+                if (playerId == 0){
+                    player.affichage.list1.setText(Server.players.get(playerId).affichage.all);
+                }
+                else if (playerId == 1){
+                    player.affichage.list2.setText(Server.players.get(playerId).affichage.all);
+                }
+                else if (playerId == 2){
+                    player.affichage.list3.setText(Server.players.get(playerId).affichage.all);
+                }
+                else if (playerId == 3){
+                    player.affichage.list4.setText(Server.players.get(playerId).affichage.all);
+                }
+                if (c.owner.affichage.playerId == 0){
+                    player.affichage.list1.setText(Server.players.get(c.owner.affichage.playerId).affichage.all);
+                }
+                else if (c.owner.affichage.playerId == 1){
+                    player.affichage.list2.setText(Server.players.get(c.owner.affichage.playerId).affichage.all);
+                }
+                else if (c.owner.affichage.playerId == 2){
+                    player.affichage.list3.setText(Server.players.get(c.owner.affichage.playerId).affichage.all);
+                }
+                else if (c.owner.affichage.playerId == 3){
+                    player.affichage.list4.setText(Server.players.get(c.owner.affichage.playerId).affichage.all);
+                }
+            }
+            Server.currentPlayer = nextplayer();
+        }
+    }
+
+    //Add and display the case of the owner for each player
     public void AddCase(Case c, int playerbuy) {
-        Server.players.get(playerbuy).affichage.all += " n"+c.position+"/0";
+        Server.players.get(playerbuy).affichage.allproperties += " n"+c.position+"/0";
+        Server.players.get(playerbuy).affichage.all = "player"+(playerbuy+1)+" with "+Server.players.get(playerbuy).sold+Server.players.get(playerbuy).affichage.allproperties;
         for (Player player : Server.players) {
             if (playerbuy == 0) {
                 player.affichage.list1.setText(Server.players.get(playerbuy).affichage.all);
@@ -334,7 +452,27 @@ class Affichage extends JFrame {
         }
     }
 
-    // Paint all the Players on the board
+    //Remove and display the case of the owner for each player
+    public void RemoveCase(Case c, int playersell) {
+        Server.players.get(playersell).affichage.allproperties = Server.players.get(playersell).affichage.allproperties.replace(" n"+c.position+"/0", "");
+        Server.players.get(playersell).affichage.all = "player"+(playersell+1)+" with "+Server.players.get(playersell).sold+Server.players.get(playersell).affichage.allproperties;
+        for (Player player : Server.players) {
+            if (playersell == 0) {
+                player.affichage.list1.setText(Server.players.get(playersell).affichage.all);
+            }
+            else if (playersell == 1) {
+                player.affichage.list2.setText(Server.players.get(playersell).affichage.all);
+            }
+            else if (playersell == 2) {
+                player.affichage.list3.setText(Server.players.get(playersell).affichage.all);
+            }
+            else if (playersell == 3) {
+                player.affichage.list4.setText(Server.players.get(playersell).affichage.all);
+            }
+        }
+    }
+
+    // when a player move, display it to all players
     public void ActPlayers(Player player, int playerId) {
         if (playerId == 0) {
             player.affichage.playerLabel1.setBounds(x, y, playerwidth, playerheight);

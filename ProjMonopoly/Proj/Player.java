@@ -12,6 +12,7 @@ public class Player {
     public Affichage affichage;
     public List<Case> cases = new ArrayList<Case>();
     public int sold = 1500;
+    public boolean bankrupt;
 
     public static void PlayButton() throws IOException {
         System.out.println("Player.PlayButton  active");

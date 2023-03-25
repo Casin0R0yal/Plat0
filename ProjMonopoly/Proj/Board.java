@@ -24,6 +24,7 @@ class Case {
 
 public class Board {
     public static List<Case> cases = new ArrayList<Case>();
+    public static Case casesell;
     public Board() {
         cases.add(new Case(0, "Départ", 0, null));
         cases.add(new Case(60, "Boulevard de Belleville", 1, "image1.png"));
