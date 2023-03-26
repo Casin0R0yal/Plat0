@@ -1,5 +1,7 @@
 package Monopoly;
 
+import java.util.ArrayList;
+
 public class land extends stations {
     Boolean canBuild;
     int[] group;
@@ -21,8 +23,8 @@ public class land extends stations {
     public Boolean getCanBuild() {return canBuild;}
     public void setCanBuild(Boolean b) { canBuild = b; }
     public void addHouse() { nbHouses++; }
-    public void retrieveHouse() { nbHouses--; }
-    public int mortgage(Boolean forReal) {
+    public void removeHouse() { nbHouses--; }
+    public int morgage(Boolean forReal) {
         if(!forReal){
             return (price + nbHouses*rent[7] + nbHotels*rent[8])/2;}
         mortgaged = true;
@@ -30,33 +32,35 @@ public class land extends stations {
         nbHotels=0;
         return (price + nbHouses*rent[7] + nbHotels*rent[8])/2;
     }
-    public Boolean isMortgaged() { return mortgaged; }
+    public void unmorgage() { mortgaged = false; }
+    public Boolean isMorgaged() { return mortgaged; }
     public void removeProperty(player i) {
         i.removeProperty(this);
         owner = null;
+        mortgaged = false;
     }
 
-    public static int onProperty(land p, player[] lp, int i) {
+    public static int onProperty(land p, ArrayList<player> lp, int i) {
         if (p.owner == null) { return buyProperty(p,lp,i); }
-        else if (p.isMortgaged()) {
+        else if (p.isMorgaged()) {
             System.out.println("This property is mortgaged.");
             return 0;
         }
-        else if (p.owner == lp[i]) {
+        else if (p.owner == lp.get(i)) {
             System.out.println("You own this property.");
             return 0;
         }
-        else {System.out.println(lp[i].getName()+", you are on "+p.name+"."); return payOwner(p,lp[i]); }
+        else {System.out.println(lp.get(i).getName()+", you are on "+p.name+"."); return payOwner(p,i,lp); }
     }
-    private static int buyProperty(land p, player[] lp, int i) {
-        if (lp[i].getMoney() >= p.price)
+    private static int buyProperty(land p, ArrayList<player> lp, int i) {
+        if (lp.get(i).getMoney() >= p.price)
         {
-            System.out.println("\n"+lp[i].getName()+", do you want to buy "+p.name+" for "+"\u001B[9m"+"M"+"\u001B[0m"+p.price+" ? (y/n)");
+            System.out.println("\n"+lp.get(i).getName()+", do you want to buy "+p.name+" for "+"\u001B[9m"+"M"+"\u001B[0m"+p.price+" ? (y/n)");
             if(System.console().readLine().equals("y")) {
-                lp[i].removeMoney(p.price);
-                lp[i].addPatrimony(p.price/2);
-                lp[i].addProperty(p);
-                p.owner = lp[i];
+                lp.get(i).removeMoney(p.price,lp);
+                lp.get(i).addPatrimony(p.price/2);
+                lp.get(i).addProperty(p);
+                p.owner = lp.get(i);
                 System.out.println("You bought "+p.name+".");
                 return 1;
             }
@@ -65,28 +69,28 @@ public class land extends stations {
         if (sale == 0) { System.out.println("Nobody bought "+p.name+"."); return 0;}
         return 1;
     }
-    private static int payOwner(land p, player i) {
+    private static int payOwner(land p, int i,ArrayList<player> lp) {
         int recu;
-        if(p.getNbHouses()==0){recu = i.payOwner(p.rent[0]*(p.getCanBuild()?2:1), p.owner.getName());}
-        else{recu = i.payOwner(p.rent[p.getNbHouses()], p.owner.getName());}
+        if(p.getNbHouses()==0){recu = lp.get(i).payOwner(p.rent[0]*(p.getCanBuild()?2:1), p.owner.getName(),lp);}
+        else{recu = lp.get(i).payOwner(p.rent[p.getNbHouses()], p.owner.getName(),lp);}
         p.owner.addMoney(recu);
         return recu;
     }
 
-    public int proposal(player[] p, int i,int max) {
-        System.out.print(p[i].getName() + " (M" + p[i].getMoney()+") your proposal (empty:abandon):");
+    public int proposal(ArrayList<player> p, int i,int max) {
+        System.out.print(p.get(i).getName() + " (M" + p.get(i).getMoney()+") your proposal (empty:abandon):");
         try {
             int prop = Integer.parseInt(System.console().readLine());
-            if (prop <= max || prop > p[i].getMoney()) {
+            if (prop <= max || prop > p.get(i).getMoney()) {
                 System.out.println("Invalid proposal.");
                 return proposal(p, i, max);
             }
             return prop;
         } catch (Exception e) {return -1;}
     }
-    public int auctionSale(player[] p){
+    public int auctionSale(ArrayList<player> p){
         System.out.println("Auction for " + name + " (M" + price + ")");
-        int max = 0;int lon=p.length;
+        int max = 0;int lon=p.size();
         Boolean[] wantIt = new Boolean[lon]; for (int k=0;k<lon;k++) {wantIt[k] = true;}
         int winner = -1;
         int j=0;
@@ -103,11 +107,11 @@ public class land extends stations {
             if (alone) {winner = j; break;}
         }
         if(max == 0) {max = 1;}
-        p[winner].removeMoney(max);
-        p[winner].addPatrimony(price/2);
-        p[winner].addProperty(this);
-        owner = p[winner];
-        System.out.println(p[winner].getName() + " won the auction for " + name + " with a proposal of " + max + ".");
+        p.get(winner).removeMoney(max,p);
+        p.get(winner).addPatrimony(price/2);
+        p.get(winner).addProperty(this);
+        owner = p.get(winner);
+        System.out.println(p.get(winner).getName() + " won the auction for " + name + " with a proposal of " + max + ".");
         return max;
 
     }
