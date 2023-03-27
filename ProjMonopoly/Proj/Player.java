@@ -11,9 +11,10 @@ public class Player {
     static BufferedReader in = null;
     public Affichage affichage;
     public List<Case> cases = new ArrayList<Case>();
-    public int sold = 1500;
+    public int sold = 5000;
     public boolean bankrupt;
     public boolean inJail = false;
+    public int jailcard = 0;
 
     public static void PlayButton() throws IOException {
         System.out.println("Player.PlayButton  active");

@@ -13,6 +13,7 @@ public class Server {
     static int currentPlayer = 0;
     static Board board = new Board();
     static Luck luck = new Luck();
+    static Community community = new Community();
 
     public void Connection() throws IOException {
         ServerSocket serverSocket = null;

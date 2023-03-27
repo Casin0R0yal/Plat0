@@ -9,6 +9,7 @@ class Case {
     public Player owner = null;
     public int position;
     public String path;
+    public int house;
 
     public Case(int price, String name, int position, String path) {
         this.price = price;

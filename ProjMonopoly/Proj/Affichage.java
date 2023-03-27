@@ -1,12 +1,10 @@
 package Proj;
 
-import java.util.ArrayList;
 import java.util.Random;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.List;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,6 +42,7 @@ class Affichage extends JFrame {
 
     int injail = 0;
     int BidAmount;
+    int paytobank = 0;
 
     JLabel playerLabel1;
     JLabel playerLabel2;
@@ -52,12 +51,12 @@ class Affichage extends JFrame {
 
     JLabel message;
 
-    private String allproperties;
-    private String all;
-    private JLabel list1;
-    private JLabel list2;
-    private JLabel list3;
-    private JLabel list4;
+    String allproperties;
+    String all;
+    JLabel list1;
+    JLabel list2;
+    JLabel list3;
+    JLabel list4;
 
     public Affichage(int playerId, int playerCount) {
         panel = new JPanel(null) {
@@ -173,6 +172,7 @@ class Affichage extends JFrame {
                     if (playerId == Server.currentPlayer) {
                         int temp = 0;
                         for (Player player : Server.players) {
+                            System.out.println(player.sold);
                             if (!player.bankrupt) {
                                 temp++;
                             }
@@ -207,7 +207,7 @@ class Affichage extends JFrame {
                                 System.out.println("It is your turn");
                                 Random rand = new Random();
                                 int pos = rand.nextInt(5) + 1;
-                                if (pos+Server.positions.get(playerId) > 40) {
+                                if (pos+Server.positions.get(playerId) >= 40) {
                                     Server.players.get(playerId).sold += 200;
                                 }
                                 Server.positions.set(playerId, (Server.positions.get(playerId) + pos) % 40);
@@ -231,6 +231,31 @@ class Affichage extends JFrame {
                                             message.setVisible(true);
                                             repaint();
                                         }
+                                        else if (c.position == 7 || c.position == 22 || c.position == 36) {
+                                            message.setText("You are on a chance card");
+                                            message.setVisible(true);
+                                            Server.luck.Action(playerId);
+                                            for (Player player : Server.players) {
+                                                ActPlayers(player, playerId);
+                                            }
+                                        }
+                                        else if (c.position == 2 || c.position == 17 || c.position == 33) {
+                                            message.setText("You are on a community chest card");
+                                            message.setVisible(true);
+                                            Server.community.Action(playerId);
+                                            for (Player player : Server.players) {
+                                                ActPlayers(player, playerId);
+                                            }
+                                        }
+                                        else if (c.position == 38 || c.position == 4) {
+                                            paytobank = 100;
+                                            if (c.position == 4) {
+                                                paytobank = 200;
+                                            }
+                                            message.setText("You payed " + paytobank + " to the bank");
+                                            message.setVisible(true);
+                                            DisplayPayBank(paytobank);
+                                        }
                                         else {
                                             if (c.owner == null) {
                                                 Buy.setVisible(true);
@@ -239,10 +264,18 @@ class Affichage extends JFrame {
                                                 repaint();
                                             }
                                             else {
-                                                message.setText("You payed " + c.price + " to " + c.owner);
-                                                message.setVisible(true);
-                                                DisplayPaySomebody(c);
-                                                repaint();
+                                                if (c.owner != Server.players.get(playerId)) {
+                                                    message.setText("You payed " + c.price + " to " + c.owner);
+                                                    message.setVisible(true);
+                                                    DisplayPaySomebody(c);
+                                                    repaint();
+                                                }
+                                                else {
+                                                    message.setText("You are on your property");
+                                                    message.setVisible(true);
+                                                    repaint();
+                                                    Server.currentPlayer = nextplayer();
+                                                }
                                             }
                                         }
                                     }
@@ -334,8 +367,15 @@ class Affichage extends JFrame {
                                     temp3 = player.affichage.playerId;
                                 }
                             }
+                            int cur = Server.currentPlayer;
+                            if (cur == 0) {
+                                cur = Server.players.size() - 1;
+                            }
+                            else {
+                                cur = cur - 1;
+                            }
                             for (Case c : Board.cases) {
-                                if (c.position == Server.positions.get(Server.currentPlayer)) {
+                                if (c.position == Server.positions.get(cur)) {
                                     c.owner = Server.players.get(temp3);
                                     System.out.println("player"+temp3+" bought " + c.name);
                                     Server.players.get(temp3).sold -= temp2;
@@ -377,7 +417,12 @@ class Affichage extends JFrame {
                             Server.players.get(playerId).sold += Board.cases.get(number).price;
                             Board.cases.get(number).owner = null;
                             RemoveCase(Board.cases.get(number), playerId);
-                            DisplayPaySomebody(Board.casesell);
+                            if (paytobank == 0) {
+                                DisplayPaySomebody(Board.casesell);
+                            }
+                            else {
+                                DisplayPayBank(paytobank);
+                            }
                             repaint();
                         }
 
@@ -475,7 +520,7 @@ class Affichage extends JFrame {
         return res;
     }
 
-    //Display and change the sold of the owner and the visiter of the case price
+    //Display and change the sold of the owner and the visitor of the case price
     public void DisplayPaySomebody(Case c){
         if (Server.players.get(playerId).sold < c.price) {
             Board.casesell = c;
@@ -483,11 +528,12 @@ class Affichage extends JFrame {
             playButton.setVisible(false);
         }
         else {
+            Board.casesell = null;
             Sell.setVisible(false);
             playButton.setVisible(true);
             Server.players.get(c.owner.affichage.playerId).sold += c.price;
-            Server.players.get(playerId).sold -= c.price;
             Server.players.get(c.owner.affichage.playerId).affichage.all = "player"+(c.owner.affichage.playerId+1)+" with "+Server.players.get(c.owner.affichage.playerId).sold+c.owner.affichage.allproperties;
+            Server.players.get(playerId).sold -= c.price;
             Server.players.get(playerId).affichage.all = "player"+(playerId+1)+" with "+Server.players.get(playerId).sold+allproperties;
             for (Player player : Server.players) {
                 if (playerId == 0){
@@ -513,6 +559,36 @@ class Affichage extends JFrame {
                 }
                 else if (c.owner.affichage.playerId == 3){
                     player.affichage.list4.setText(Server.players.get(c.owner.affichage.playerId).affichage.all);
+                }
+            }
+            Server.currentPlayer = nextplayer();
+        }
+    }
+
+    public void DisplayPayBank(int amount) {
+        if (Server.players.get(playerId).sold < amount) {
+            paytobank = amount;
+            Sell.setVisible(true);
+            playButton.setVisible(false);
+        }
+        else {
+            paytobank = 0;
+            Sell.setVisible(false);
+            playButton.setVisible(true);
+            Server.players.get(playerId).sold -= amount;
+            Server.players.get(playerId).affichage.all = "player"+(playerId+1)+" with "+Server.players.get(playerId).sold+allproperties;
+            for (Player player : Server.players) {
+                if (playerId == 0){
+                    player.affichage.list1.setText(Server.players.get(playerId).affichage.all);
+                }
+                else if (playerId == 1){
+                    player.affichage.list2.setText(Server.players.get(playerId).affichage.all);
+                }
+                else if (playerId == 2){
+                    player.affichage.list3.setText(Server.players.get(playerId).affichage.all);
+                }
+                else if (playerId == 3){
+                    player.affichage.list4.setText(Server.players.get(playerId).affichage.all);
                 }
             }
             Server.currentPlayer = nextplayer();
