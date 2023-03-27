@@ -5,40 +5,40 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 /**
  * 
- * Éè¶¨½çÃæÍ¼Æ¬Àà
+ * ï¿½è¶¨ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½
  * 
  * */
 
 public class Photo {
 	
 	/**
-	 *  Íæ¼ÒÒ»Ñ¡¶¨Í¼Æ¬
+	 *  ï¿½ï¿½ï¿½Ò»Ñ¡ï¿½ï¿½Í¼Æ¬
 	 */
 	public static ImageIcon PLAYER_01_SELECTED = new ImageIcon("images/config/playerChoose/selected_01.png");
 	/**
-	 *  Íæ¼Ò¶þÑ¡¶¨Í¼Æ¬
+	 *  ï¿½ï¿½Ò¶ï¿½Ñ¡ï¿½ï¿½Í¼Æ¬
 	 */
 	public static ImageIcon PLAYER_02_SELECTED = new ImageIcon("images/config/playerChoose/selected_02.png");
 	/**
-	 *  ×ó°´Å¥
+	 *  ï¿½ï¿½Å¥
 	 */
 	public static ImageIcon[] BUTTON_LEFT = {
-		new ImageIcon("images/config/×ó°´Å¥/normal.png"),
-		new ImageIcon("images/config/×ó°´Å¥/disabled.png"),
-		new ImageIcon("images/config/×ó°´Å¥/mouseOver.png"),
-		new ImageIcon("images/config/×ó°´Å¥/pressed.png")
+		new ImageIcon("images/config/BoutonGauche/normal.png"),
+		new ImageIcon("images/config/BoutonGauche/disabled.png"),
+		new ImageIcon("images/config/BoutonGauche/mouseOver.png"),
+		new ImageIcon("images/config/BoutonGauche/pressed.png")
 	};
 	/**
-	 *  ÓÒ°´Å¥
+	 *  ï¿½Ò°ï¿½Å¥
 	 */
 	public static ImageIcon[] BUTTON_RIGHT = {
-		new ImageIcon("images/config/ÓÒ°´Å¥/normal.png"),
-		new ImageIcon("images/config/ÓÒ°´Å¥/disabled.png"),
-		new ImageIcon("images/config/ÓÒ°´Å¥/mouseOver.png"),
-		new ImageIcon("images/config/ÓÒ°´Å¥/pressed.png")
+		new ImageIcon("images/config/BoutonDroit/normal.png"),
+		new ImageIcon("images/config/BoutonDroit/disabled.png"),
+		new ImageIcon("images/config/BoutonDroit/mouseOver.png"),
+		new ImageIcon("images/config/BoutonDroit/pressed.png")
 	};
 	/**
-	 * ¿ÉÑ¡ÈËÎïÍ¼Æ¬
+	 * ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 	 * */
 	public static ImageIcon[] PLAYER_CHOOSE = {
 		new ImageIcon("images/player/0/head_h5.png"),

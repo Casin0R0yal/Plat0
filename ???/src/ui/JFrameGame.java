@@ -9,27 +9,27 @@ public class JFrameGame extends JFrame {
 
 	/**
 	 * 
-	 * Ä¬ÈÏÖ÷panel
+	 * Ä¬ï¿½ï¿½ï¿½ï¿½panel
 	 * 
 	 * */
 	private JPanelGame panelGame = null;
 	
 	public JFrameGame() {
-		// ÉèÖÃÃû×Ö
-		this.setTitle("ÃÔÄã´ó¸»ÎÌ-Java°æ");
-		// ÉèÖÃÄ¬ÈÏ¹Ø±ÕÊôĞÔ£¨³ÌĞò½áÊø£©
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		this.setTitle("Monopoly");
+		// ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½Ï¹Ø±ï¿½ï¿½ï¿½ï¿½Ô£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// ÉèÖÃ´°¿Ú´óĞ¡
+		// ï¿½ï¿½ï¿½Ã´ï¿½ï¿½Ú´ï¿½Ğ¡
 		this.setSize(750 + 200, 650);
-		// ²»ÔÊĞíÓÃ»§¸Ä±ä´°¿Ú´óĞ¡
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½Ä±ä´°ï¿½Ú´ï¿½Ğ¡
 		this.setResizable(false);
-		// ¾ÓÖĞ
+		// ï¿½ï¿½ï¿½ï¿½
 		FrameUtil.setFrameCenter(this);
-		// ÉèÖÃÄ¬ÈÏPanel
+		// ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½Panel
 		this.panelGame = new JPanelGame();
 		add(this.panelGame);
 		
-		// ÉèÖÃ±ß¿òÏÔÊ¾
+		// ï¿½ï¿½ï¿½Ã±ß¿ï¿½ï¿½ï¿½Ê¾
 		this.setUndecorated(false);
 	}
 

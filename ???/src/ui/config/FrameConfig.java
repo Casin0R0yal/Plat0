@@ -41,19 +41,19 @@ import control.GameRunning;
  * */
 public class FrameConfig extends JFrame {
 
-	private JButton jbnStart = new JButton("Démarrer le jeu");
+	private JButton jbnStart = new JButton("Start");
 	//private JButton jbnradom = new JButton("���");
 	private JButton jbnCancel = new JButton("Réinitialiser les paramètres");
 
-	private JButton jbnPlayer01 = new JButton("1P confirme le rôle");
-	private JLabel jbnPlayerNameLabel01 = new JLabel("Nom :");
+	private JButton jbnPlayer01 = new JButton("Valider");
+	private JLabel jbnPlayerNameLabel01 = new JLabel("Nom:");
 	private JTextField jbnPlayerNameField01 = new JTextField(12);
-	private JButton jbnPlayerName01 = new JButton("1P confirme le nom");
+	private JButton jbnPlayerName01 = new JButton("Valider");
 
-	private JButton jbnPlayer02 = new JButton("2P confirmer le rôle");
-	private JLabel jbnPlayerNameLabel02 = new JLabel("Nom :");
+	private JButton jbnPlayer02 = new JButton("Valider");
+	private JLabel jbnPlayerNameLabel02 = new JLabel("Nom:");
 	private JTextField jbnPlayerNameField02 = new JTextField(12);
-	private JButton jbnPlayerName02 = new JButton("2P confirmer le nom");
+	private JButton jbnPlayerName02 = new JButton("Valider");
 
 	/**
 	 * ѡ�
@@ -104,32 +104,32 @@ public class FrameConfig extends JFrame {
 	public FrameConfig(WaitFrame wFrame,JFrameGame jFrameGame) {
 		wFrame.setVisible(false);
 		this.jFrameGame = jFrameGame;
-		setTitle("Paramètres des données utilisateur");
+		setTitle("Settings");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// ���ò��ֹ�����Ϊ�߽粼��
+		// 
 		this.setLayout(new BorderLayout());
-		// ���������
+		// 
 		this.add(this.createMainPanel(), BorderLayout.CENTER);
-		// ���Ӱ�ť���
+		// 
 		this.add(this.createButtonPanel(), BorderLayout.SOUTH);
 		this.setResizable(false);
 		this.setSize(380, 370);
-		// ���ж���
+		// 
 		FrameUtil.setFrameCenter(this);
 		setVisible(true);
 	}
 
 	/**
-	 * ���������
+	 * 
 	 */
 	private JTabbedPane createMainPanel() {
 		this.tabs = new JTabbedPane();
 		this.tabs.setOpaque(false);
-		this.tabs.add("Réglage du personnage", this.createPlayerSelectPanel());
+		this.tabs.add("Player", this.createPlayerSelectPanel());
 		this.tabs.setToolTipTextAt(0, "Compléter le réglage des caractères");
-		this.tabs.add("Réglage de la scène", this.createMapSelectPanel());
+		this.tabs.add("Stage", this.createMapSelectPanel());
 		this.tabs.setToolTipTextAt(1, "Vous pouvez définir la scène du jeu.");
-		this.tabs.add("Paramètres du jeu", this.createGameSelectPanel());
+		this.tabs.add("Settings", this.createGameSelectPanel());
 		this.tabs.setToolTipTextAt(2, "Vous pouvez définir les conditions de victoire du jeu, etc...");
 		return tabs;
 	}
@@ -218,7 +218,7 @@ public class FrameConfig extends JFrame {
 		JPanel infoPanel = new JPanel();
 		infoPanel.setBorder(BorderFactory.createTitledBorder(""));
 		JLabel info = new JLabel();
-		info.setText("<html>Cela peut changer les conditions de gain du jeu.<strong>(La faillite par défaut est un échec)</strong></html>");
+		info.setText("<html>Cela peut changer les conditions de gain du jeu. <strong>(la faillite est un échec)</strong></html>");
 		infoPanel.add(info);
 
 		panel.add(dayPanel);
@@ -238,28 +238,29 @@ public class FrameConfig extends JFrame {
 		jp.setLayout(new GridLayout());
 		jp.setBackground(new Color(235,236,237));
 		JPanel lPane = new JPanel(new BorderLayout());
-		String[] maps = { "\"Carte de l'AMOUR\"", "\"Carte de la maison hantée\"", "\"Carte de bonne chance\"" };
+		String[] maps = { "\"Carte de l'AMOUR\"", "\"Carte de la maison hantée\"", "\"Carte de bonne chance\"","Monopoly" };
 		final ImageIcon[] maps1 = {
 				new ImageIcon("images/other/1.png"),
 				new ImageIcon("images/other/2.png"),
-				new ImageIcon("images/other/3.png") };
+				new ImageIcon("images/other/3.png"),
+				new ImageIcon("images/other/4.png") };
 		final JList jlst = new JList(maps);
 		jlst.setSelectedIndex(0);
 		final JLabel mapV = new JLabel(maps1[0]);
-		final JButton ok = new JButton("Certain");
+		final JButton ok = new JButton("Select");
 		ok.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				GameRunning.MAP = jlst.getSelectedIndex() + 1;
-				ok.setText("Déjà sélectionné");
+				ok.setText("Already selected");
 			}
 		});
 		jlst.addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				mapV.setIcon(maps1[jlst.getSelectedIndex()]);
-				ok.setText("Certain");
+				ok.setText("Select");
 			}
 		});
 		lPane.add(jlst);
@@ -273,17 +274,17 @@ public class FrameConfig extends JFrame {
 	}
 
 	/**
-	 * ����ѡ�����
+	 * 
 	 * */
 	private JPanel createPlayerSelectPanel() {
 		JPanel jp = new JPanel();
 		jp.setLayout(null);
 		jp.setBackground(new Color(235,236,237));
-		// ����1P���
+		// 
 		addPlayer01Config(12, 0, jp);
-		// ����2P���
+		// 
 		addPlayer02Config(212, 0, jp);
-		// �������ð�ť
+		// 
 		addCancelButton(jp);
 		return jp;
 	}
@@ -308,7 +309,7 @@ public class FrameConfig extends JFrame {
 				jbnPlayerNameField01.setText("");
 				jbnPlayerNameField01.setEditable(true);
 				jbnPlayerName01.setEnabled(true);
-				selected[0] = 1;
+				selected[0] = 2;
 				chooses[0] = 0;
 
 				leftButton02.setEnabled(true);
@@ -319,7 +320,7 @@ public class FrameConfig extends JFrame {
 				jbnPlayerNameField02.setText("");
 				jbnPlayerNameField02.setEditable(true);
 				jbnPlayerName02.setEnabled(true);
-				selected[1] = 2;
+				selected[1] = 3;
 				chooses[1] = 0;
 				repaint();
 			}
@@ -329,23 +330,23 @@ public class FrameConfig extends JFrame {
 	}
 
 	/**
-	 * ����1P���
+	 * 
 	 */
 	private void addPlayer01Config(int x, int y, JPanel jp) {
-		// ���� ����ͼ��label
+		// 
 		jlPlayer01Choose = new JLabel(img[chooses[0]]);
 		jlPlayer01Choose.setBounds(x + 8, y, 128, 128);
-		// ��������ͼ����ѡ��label
+		// 
 		jlPlayer01Selected.setBounds(x + 8, y, 128, 128);
 		jlPlayer01Selected.setVisible(false);
-		// ������ť
+		// 
 		leftButton01 = this.createButton(x, 92 + y, Photo.BUTTON_LEFT, 'a');
-		// ���Ӽ����¼�
+		// 
 		leftButton01.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// ����Ϊѭ��
+				// 
 				if (chooses[0] <= 0) {
 					chooses[0] = img.length;
 				}
@@ -511,27 +512,28 @@ public class FrameConfig extends JFrame {
 	}
 
 	/**
-	 * ���Ӱ�ť���
+	 * 
 	 */
 	private JPanel createButtonPanel() {
 		JPanel jp = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		
-		// ��ʼ��ť���Ӽ�����
+		// 
 		jbnStart.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (selected[0] < 0 || selected[1] < 0) {
-					JOptionPane.showMessageDialog(null, "Veuillez compléter le réglage des caractères !");
+					JOptionPane.showMessageDialog(null, "choose your player !");
 				} else if (selectedName[0].equals("")
 						|| selectedName[1].equals("")) {
-					JOptionPane.showMessageDialog(null, "Veuillez compléter le réglage du nom !");
+					JOptionPane.showMessageDialog(null, "input your name !");
 				} else {
-					int choose = JOptionPane.showConfirmDialog(null, "Est-ce pour commencer ?");
-					if (choose == JOptionPane.OK_OPTION) {
-						// ��ʼ��Ϸ
-						startGame();
-					}
+					startGame();
+					// int choose = JOptionPane.showConfirmDialog(null, "start ?");
+					// if (choose == JOptionPane.OK_OPTION) {
+					// 
+					// 	startGame();
+					// }
 				}
 			}
 
@@ -542,7 +544,7 @@ public class FrameConfig extends JFrame {
 				setVisible(false);
 				jFrameGame.setVisible(true);
 				Control control = jFrameGame.getPanelGame().getControl();
-				// ���������������
+				// 
 				dealPlayers(control);
 				// ����������
 				control.start();
