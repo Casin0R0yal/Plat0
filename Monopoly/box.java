@@ -1,7 +1,9 @@
 package Monopoly;
 
+import java.util.ArrayList;
+
 interface action {
-    void perform(board b, player[] p, int i);
+    void perform(board b, ArrayList<player> p, int i);
 }
 
 public class box {
@@ -14,6 +16,6 @@ public class box {
         name = Name;
         action = Action;
     }
-    public int mortgage(Boolean fake) {return 0; }
+    public int morgage(Boolean fake) {return 0; }
     // public Boolean isMortgaged() { return false; }
 }

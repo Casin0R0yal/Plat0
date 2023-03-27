@@ -1,9 +1,10 @@
 package Monopoly;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 interface traduction {
-    void perform(board b, player[] p, int i);
+    void perform(board b, ArrayList<player> p, int i);
 }
 
 public class luck {
@@ -30,38 +31,38 @@ public class luck {
             "Votre immeuble et votre prêt rapportent. Vous devez toucher M200"
         };
         traduction[] trad = {
-            new traduction() {public void perform(board b, player[] p, int i) {p[i].setPosition(39);b.getbox(39).action.perform(b, p, i);} },
-            new traduction() {public void perform(board b, player[] p, int i) {p[i].setPosition(0);b.getbox(0).action.perform(b, p, i);} },
-            new traduction() {public void perform(board b, player[] p, int i) {
-                if (p[i].getPosition()>24) {p[i].addMoney(200);}p[i].setPosition(24);b.getbox(24).action.perform(b, p, i);} },
-            new traduction() {public void perform(board b, player[] p, int i) {
-                if (p[i].getPosition()>11) {p[i].addMoney(200);}p[i].setPosition(11);b.getbox(11).action.perform(b, p, i);} },
-            new traduction() {public void perform(board b, player[] p, int i) {
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) {p.get(i).setPosition(39);b.getbox(39).action.perform(b, p, i);} },
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) {p.get(i).setPosition(0);b.getbox(0).action.perform(b, p, i);} },
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) {
+                if (p.get(i).getPosition()>24) {p.get(i).addMoney(200);}p.get(i).setPosition(24);b.getbox(24).action.perform(b, p, i);} },
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) {
+                if (p.get(i).getPosition()>11) {p.get(i).addMoney(200);}p.get(i).setPosition(11);b.getbox(11).action.perform(b, p, i);} },
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) {
                 int nbMaison=0;int nbHotel=0;
-                for(int j=0; j<p[i].getNbProperties();j++){
-                    if(p[i].getProperties(j).type==type.LAND) { land pr = p[i].getLand(j);
+                for(int j=0; j<p.get(i).getNbProperties();j++){
+                    if(p.get(i).getProperties(j).type==type.LAND) { land pr = p.get(i).getLand(j);
                     try{if(pr.getNbHotels()==1){nbHotel++;}else{nbMaison+=pr.getNbHouses();}}catch(Exception e){}}}
-                nbMaison = nbMaison*100 + nbHotel*150; p[i].removeMoney(nbMaison);}},
-            new traduction() {public void perform(board b, player[] p, int i) {
-                if (p[i].getPosition()>5) {p[i].addMoney(200);}p[i].setPosition(5);b.getbox(5).action.perform(b, p, i);} },
-            new traduction() {public void perform(board b, player[] p, int i) {p[i].addMoney(100);} },
-            new traduction() {public void perform(board b, player[] p, int i) {p[i].addMoney(50);} },
-            new traduction() {public void perform(board b, player[] p, int i) {p[i].setJailCard(true);} },
-            new traduction() {public void perform(board b, player[] p, int i) {
-                int pos = p[i].getPosition();
-                if (pos<3) {p[i].setPosition(pos+37);b.getbox(pos+37).action.perform(b, p, i);}
-                else{p[i].setPosition(pos-3);b.getbox(pos-3).action.perform(b, p, i);}}},
-            new traduction() {public void perform(board b, player[] p, int i) {p[i].GoToJail();}},
-            new traduction() {public void perform(board b, player[] p, int i) {
+                nbMaison = nbMaison*100 + nbHotel*150; p.get(i).removeMoney(nbMaison,p);}},
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) {
+                if (p.get(i).getPosition()>5) {p.get(i).addMoney(200);}p.get(i).setPosition(5);b.getbox(5).action.perform(b, p, i);} },
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) {p.get(i).addMoney(100);} },
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) {p.get(i).addMoney(50);} },
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) {p.get(i).setJailCard(true);} },
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) {
+                int pos = p.get(i).getPosition();
+                if (pos<3) {p.get(i).setPosition(pos+37);b.getbox(pos+37).action.perform(b, p, i);}
+                else{p.get(i).setPosition(pos-3);b.getbox(pos-3).action.perform(b, p, i);}}},
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) {p.get(i).GoToJail();}},
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) {
                 int nbMaison=0;int nbHotel=0;
-                for(int j=0; j<p[i].getNbProperties();j++){
-                    if(p[i].getProperties(j).type==type.LAND) { land pr = p[i].getLand(j);
+                for(int j=0; j<p.get(i).getNbProperties();j++){
+                    if(p.get(i).getProperties(j).type==type.LAND) { land pr = p.get(i).getLand(j);
                     try{if(pr.getNbHotels()==1){nbHotel++;}else{nbMaison+=pr.getNbHouses();}}catch(Exception e){}}}
-                nbMaison = nbMaison*100 + nbHotel*150; p[i].removeMoney(nbMaison);}},
-            new traduction() {public void perform(board b, player[] p, int i) { p[i].removeMoney(50);}},
-            new traduction() {public void perform(board b, player[] p, int i) { p[i].removeMoney(100);}},
-            new traduction() {public void perform(board b, player[] p, int i) { p[i].removeMoney(100);}},
-            new traduction() {public void perform(board b, player[] p, int i) {p[i].addMoney(200);} }
+                nbMaison = nbMaison*100 + nbHotel*150; p.get(i).removeMoney(nbMaison,p);}},
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) { p.get(i).removeMoney(50,p);}},
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) { p.get(i).removeMoney(100,p);}},
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) { p.get(i).removeMoney(100,p);}},
+            new traduction() {public void perform(board b, ArrayList<player> p, int i) {p.get(i).addMoney(200);} }
             };
 		Random rand = new Random();
         int x=rand.nextInt(16);
@@ -69,7 +70,7 @@ public class luck {
         action = trad[x];
     }
 
-    public int onLuck(board b,player[] p, int i) {
+    public int onLuck(board b,ArrayList<player> p, int i) {
         System.out.println(text);
         action.perform(b,p,i);
         return 0;
