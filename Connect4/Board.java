@@ -48,9 +48,25 @@ public class Board{
         }
     }
 
-    public static void PutCell(Player p, int x, int y)
+    public int[] PutCell(Player p, int y)
     {
-        table[x][y] = p.token;
+        if(y < 0 || y > 5)
+            {
+                System.out.println("Invalid column");
+                return null;
+            }
+        int abs = 6;
+        while(abs >=0 && table[abs][y] == 1)
+            {
+                abs--;
+            }
+        if(abs < 0)
+            {
+                System.out.println("Column is full");
+                return null;
+            }
+        table[abs][y] = p.token;
+        return new int[]{abs, y}; // return the coordinates of the cell
     }
 
     public void PrettyPrint()

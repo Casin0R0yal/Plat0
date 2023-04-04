@@ -12,19 +12,142 @@ public class Game{
         this.board = board;
         player1 = new Player("red",1);
         player2 = new Player("yellow",2);
-    }
-
-    public void CheckBoard()
+    } 
+    public boolean CheckHorizontal(int x, int y)
     {
-        for(int i = 0; i < board.cols; i++)
+        //check the horizontal line
+        int count = 0;
+        for(int i = 0; i < 7; i++)
         {
-            for(int j = 0; j < board.rows; j++)
+            if(board.table[i][y] == board.table[x][y])
+                count++;
+            else
+                count = 0;
+            if(count == 4)
             {
-                // check neighbours table[j][i]
+                if(board.table[x][y] == 1)
+                    player1.HasWon = true;
+                else
+                    player2.HasWon = true;
+                return true;
             }
-            System.out.println();
         }
-        // Declare if player has won
+        return false;
+
+    }
+    public boolean CheckVertical(int x, int y)
+    {
+        //check the vertical line
+        int count = 0;
+        for(int i = 0; i < 6; i++)
+        {
+            if(board.table[x][i] == board.table[x][y])
+                count++;
+            else
+                count = 0;
+            if(count == 4)
+            {
+                if(board.table[x][y] == 1)
+                    player1.HasWon = true;
+                else
+                    player2.HasWon = true;
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean CheckDiagonal(int x, int y)
+    {
+        //check the diagonal line
+        int count = 0;
+        int i = x;
+        int j = y;
+        while(i < 6 && j < 7)
+        {
+            if(board.table[i][j] == board.table[x][y])
+                count++;
+            else
+                count = 0;
+            if(count == 4)
+            {
+                if(board.table[x][y] == 1)
+                    player1.HasWon = true;
+                else
+                    player2.HasWon = true;
+                return true;
+            }
+            i++;
+            j++;
+        }
+        i = x;
+        j = y;
+        while(i >= 0 && j >= 0)
+        {
+            if(board.table[i][j] == board.table[x][y])
+                count++;
+            else
+                count = 0;
+            if(count == 4)
+            {
+                if(board.table[x][y] == 1)
+                    player1.HasWon = true;
+                else
+                    player2.HasWon = true;
+                return true;
+            }
+            i--;
+            j--;
+        }
+        i = x;
+        j = y;
+        while(i >= 0 && j < 7)
+        {
+            if(board.table[i][j] == board.table[x][y])
+                count++;
+            else
+                count = 0;
+            if(count == 4)
+            {
+                if(board.table[x][y] == 1)
+                    player1.HasWon = true;
+                else
+                    player2.HasWon = true;
+                return true;
+            }
+            i--;
+            j++;
+        }
+        i = x;
+        j = y;
+        while(i < 6 && j >= 0)
+        {
+            if(board.table[i][j] == board.table[x][y])
+                count++;
+            else
+                count = 0;
+            if(count == 4)
+            {
+                if(board.table[x][y] == 1)
+                    player1.HasWon = true;
+                else
+                    player2.HasWon = true;
+                return true;
+            }
+            i++;
+            j--;
+        }
+        return false;
+    }
+    public void CheckBoard(int[] x)
+    {
+        //check if there is a winner
+        if(CheckHorizontal(x[0],x[1]) || CheckVertical(x[0],x[1]) || CheckDiagonal(x[0],x[1]))
+        {
+            if(player1.HasWon)
+                System.out.println("Player 1 has won !");
+            if(player2.HasWon)
+                System.out.println("Player 2 has won !");
+        }
     }
 
     public boolean EndGame()
@@ -47,14 +170,13 @@ public class Game{
         System.out.println("Player 1, it's your turn.");
         int x1 = sc.nextInt();
         int y1 = sc.nextInt();
-
-        board.PutCell(player1,x1,y1);
+        CheckBoard(board.PutCell(player1,y1));
 
         System.out.println("Player 2, it's your turn.");
         int x2 = sc.nextInt();
         int y2 = sc.nextInt();
 
-        board.PutCell(player2,x2, y2);
+        CheckBoard(board.PutCell(player2,y2));
 
     }
 
