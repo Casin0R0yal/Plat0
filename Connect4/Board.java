@@ -2,9 +2,9 @@ import java.io.*;
 
 
 public class Board{
-    public final static int rows = 7;
-    public final static int cols = 6;
-    public static int[][] table = new int[7][6];
+    public final static int rows = 6;
+    public final static int cols = 7;
+    public static int[][] table = new int[rows][cols];
 
     public Board()
     {
@@ -50,13 +50,13 @@ public class Board{
 
     public int[] PutCell(Player p, int y)
     {
-        if(y < 0 || y > 5)
+        if(y < 0 || y > cols)
             {
                 System.out.println("Invalid column");
                 return null;
             }
-        int abs = 6;
-        while(abs >=0 && table[abs][y] == 1)
+        int abs = 5;
+        while(abs >=0 && table[abs][y] != 0)
             {
                 abs--;
             }
@@ -71,12 +71,12 @@ public class Board{
 
     public void PrettyPrint()
     {
-        for(int i = 0; i < cols; i++)
+        for(int i = 0; i < rows; i++)
         {
-            for(int j = 0; j < rows; j++)
+            for(int j = 0; j < cols; j++)
             {
                 System.out.print(" | ");
-                System.out.print(table[j][i]);
+                System.out.print(table[i][j]);
                 System.out.print(" | ");
             }
             System.out.println();

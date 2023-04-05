@@ -17,7 +17,7 @@ public class Game{
     {
         //check the horizontal line
         int count = 0;
-        for(int i = 0; i < 7; i++)
+        for(int i = 0; i < board.rows; i++)
         {
             if(board.table[i][y] == board.table[x][y])
                 count++;
@@ -39,7 +39,7 @@ public class Game{
     {
         //check the vertical line
         int count = 0;
-        for(int i = 0; i < 6; i++)
+        for(int i = 0; i < board.cols; i++)
         {
             if(board.table[x][i] == board.table[x][y])
                 count++;
@@ -62,7 +62,7 @@ public class Game{
         int count = 0;
         int i = x;
         int j = y;
-        while(i < 6 && j < 7)
+        while(i < board.rows && j < board.cols)
         {
             if(board.table[i][j] == board.table[x][y])
                 count++;
@@ -100,7 +100,7 @@ public class Game{
         }
         i = x;
         j = y;
-        while(i >= 0 && j < 7)
+        while(i >= 0 && j < board.cols)
         {
             if(board.table[i][j] == board.table[x][y])
                 count++;
@@ -119,7 +119,7 @@ public class Game{
         }
         i = x;
         j = y;
-        while(i < 6 && j >= 0)
+        while(i < board.rows && j >= 0)
         {
             if(board.table[i][j] == board.table[x][y])
                 count++;
@@ -168,15 +168,32 @@ public class Game{
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Player 1, it's your turn.");
-        int x1 = sc.nextInt();
         int y1 = sc.nextInt();
-        CheckBoard(board.PutCell(player1,y1));
+        int[] p1 = board.PutCell(player1,y1);
+        while(p1 == null)
+        {
+            y1 = sc.nextInt();
+            p1 = board.PutCell(player1,y1);
+        }
+        CheckBoard(p1);
+        board.PrettyPrint();
 
+        if(EndGame())
+        {
+            return;
+        }
         System.out.println("Player 2, it's your turn.");
-        int x2 = sc.nextInt();
         int y2 = sc.nextInt();
 
-        CheckBoard(board.PutCell(player2,y2));
+        int[] p2 = board.PutCell(player2,y2);
+        while(p2 == null)
+        {
+            y2 = sc.nextInt();
+            p2 = board.PutCell(player2,y2);
+        }
+        CheckBoard(p2);
+
+        board.PrettyPrint();
 
     }
 
