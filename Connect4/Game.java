@@ -30,6 +30,7 @@ public class Game{
                     
                 else
                     player2.HasWon = true;
+                System.out.println("Vert");
                 return true;
             }
         }
@@ -52,6 +53,7 @@ public class Game{
                     player1.HasWon = true;
                 else
                     player2.HasWon = true;
+                System.out.println("hor");
                 return true;
             }
         }
@@ -76,7 +78,7 @@ public class Game{
                 else
                     player2.HasWon = true;
                 
-                System.out.println("1");
+                System.out.println("ad");
                 return true;
             }
             i++;
@@ -86,6 +88,7 @@ public class Game{
         j = y;
         while(i >= 0 && j >= 0)
         {
+            count=0;
             if(board.table[i][j] == board.table[x][y])
                 count++;
             else
@@ -97,7 +100,7 @@ public class Game{
                 else
                     player2.HasWon = true;
                 
-                System.out.println("2");
+                System.out.println("bd");
                 return true;
             }
             i--;
@@ -107,6 +110,7 @@ public class Game{
         j = y;
         while(i >= 0 && j < board.cols)
         {
+            count=0;
             if(board.table[i][j] == board.table[x][y])
                 count++;
             else
@@ -118,7 +122,7 @@ public class Game{
                 else
                     player2.HasWon = true;
                 
-                System.out.println("3");
+                System.out.println("cd");
                 return true;
             }
             i--;
@@ -128,6 +132,7 @@ public class Game{
         j = y;
         while(i < board.rows && j >= 0)
         {
+            count=0;
             if(board.table[i][j] == board.table[x][y])
                 count++;
             else
@@ -138,9 +143,10 @@ public class Game{
                     player1.HasWon = true;
                 else
                     player2.HasWon = true;
+                
+                System.out.println("dd");
                 return true;
 
-                System.out.println("4");
             }
             i++;
             j--;
