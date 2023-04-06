@@ -27,6 +27,7 @@ public class Game{
             {
                 if(board.table[x][y] == 1)
                     player1.HasWon = true;
+                    
                 else
                     player2.HasWon = true;
                 return true;
@@ -74,6 +75,8 @@ public class Game{
                     player1.HasWon = true;
                 else
                     player2.HasWon = true;
+                
+                System.out.println("1");
                 return true;
             }
             i++;
@@ -93,6 +96,8 @@ public class Game{
                     player1.HasWon = true;
                 else
                     player2.HasWon = true;
+                
+                System.out.println("2");
                 return true;
             }
             i--;
@@ -112,6 +117,8 @@ public class Game{
                     player1.HasWon = true;
                 else
                     player2.HasWon = true;
+                
+                System.out.println("3");
                 return true;
             }
             i--;
@@ -132,6 +139,8 @@ public class Game{
                 else
                     player2.HasWon = true;
                 return true;
+
+                System.out.println("4");
             }
             i++;
             j--;
