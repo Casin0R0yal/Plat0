@@ -14,6 +14,18 @@ process :
 	javac Main.java
 	clear
 	java Main 4
+grid:
+	javac GridOfButtons.java
+	clear
+	java GridOfButtons
+flow:
+	javac FlowLayoutDemo.java
+	clear
+	java FlowLayoutDemo
+ui :
+	javac MyGridLayout.java
+	clear
+	java MyGridLayout
 clean:
 	rm *.class
 
