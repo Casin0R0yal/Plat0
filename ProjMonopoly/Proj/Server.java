@@ -21,7 +21,7 @@ public class Server {
         int playerCount = 0;
 
         try {
-            serverSocket = new ServerSocket(4444);
+            serverSocket = new ServerSocket(4444, 0, InetAddress.getByName("0.0.0.0"));
         } catch (IOException e) {
             System.err.println("Could not listen on port: 4444.");
             System.exit(-1);

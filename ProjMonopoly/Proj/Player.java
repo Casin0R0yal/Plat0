@@ -15,10 +15,7 @@ public class Player {
     public boolean bankrupt;
     public boolean inJail = false;
     public int jailcard = 0;
-
-    public static void PlayButton() throws IOException {
-        System.out.println("Player.PlayButton  active");
-    }
+    public int nbdoubles = 0;
 
     public Player(Affichage affichage) {
         this.affichage = affichage;
@@ -26,7 +23,7 @@ public class Player {
     public static void main(String[] args) throws IOException {
 
         try {
-            socket = new Socket("localhost", 4444); // connexion au serveur
+            socket = new Socket("0.0.0.0", 4444); // connexion au serveur
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (UnknownHostException e) {

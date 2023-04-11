@@ -229,14 +229,17 @@ public class Luck {
         }
 
         else if (action.equals("Amende pour excès de vitesse M50")) {
+            Board.publicparking += 50;
             Server.players.get(Server.currentPlayer).affichage.DisplayPayBank(50);
         }
 
         else if (action.equals("Payez pour frais de scolarité M100")) {
+            Board.publicparking += 100;
             Server.players.get(Server.currentPlayer).affichage.DisplayPayBank(100);
         }
         
         else if (action.equals("Amende pour ivresse M100")) {
+            Board.publicparking += 100;
             Server.players.get(Server.currentPlayer).affichage.DisplayPayBank(100);
         }
 
@@ -375,6 +378,7 @@ class Community {
         }
 
         else if (action.equals("Payez la note du médecin M100")) {
+            Board.publicparking += 100;
             Server.players.get(Server.currentPlayer).affichage.DisplayPayBank(100);
         }
 
@@ -461,10 +465,12 @@ class Community {
         }
         
         else if (action.equals("Payez votre Police d’Assurance M150")) {
+            Board.publicparking += 150;
             Server.players.get(Server.currentPlayer).affichage.DisplayPayBank(150);
         }
 
         else if (action.equals("Payez une amende de M100")) {
+            Board.publicparking += 100;
             Server.players.get(Server.currentPlayer).affichage.DisplayPayBank(100);
         }
 
