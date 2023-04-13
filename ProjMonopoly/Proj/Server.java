@@ -21,9 +21,9 @@ public class Server {
         int playerCount = 0;
 
         try {
-            serverSocket = new ServerSocket(4444, 0, InetAddress.getByName("0.0.0.0"));
+            serverSocket = new ServerSocket(51734);
         } catch (IOException e) {
-            System.err.println("Could not listen on port: 4444.");
+            System.err.println("Could not listen on port: 51734.");
             System.exit(-1);
         }
         int temp = 0;
@@ -54,7 +54,7 @@ public class Server {
             this.playerCount = playerCount;
             this.socket = socket;
             this.playerId = playerId;
-            players.add(new Player(new Affichage(playerId, PLAYER_MAX)));
+            players.add(new Player(playerId, playerCount));
             positions.add(0);
             if (playerId+1 == playerCount) {
                 for (int i = 0; i < players.size(); i++) {

@@ -90,11 +90,11 @@ class Affichage extends JFrame {
         playerwidth = 30;
         playerheight = 30;
         message = new JLabel();
-        message.setBounds(WINDOW_WIDTH/2-50,WINDOW_HEIGHT/2, 300, 20);
+        message.setBounds(WINDOW_WIDTH/2-50,WINDOW_HEIGHT/2-150, 300, 20);
         message.setVisible(false);
         panel.add(message);
         message2 = new JLabel();
-        message2.setBounds(WINDOW_WIDTH/2-50,WINDOW_HEIGHT/2-20, 300, 20);
+        message2.setBounds(WINDOW_WIDTH/2-50,WINDOW_HEIGHT/2-150, 300, 20);
         message2.setVisible(false);
         panel.add(message2);
         allproperties = "$ case/nb of house: ";
@@ -165,7 +165,7 @@ class Affichage extends JFrame {
             panel.add(list1);
         }
         if (Server.PLAYER_MAX > 1) {
-            player2 = Toolkit.getDefaultToolkit().getImage("player.png");
+            player2 = Toolkit.getDefaultToolkit().getImage("boat.png");
             player2 = player2.getScaledInstance(playerwidth, playerheight, Image.SCALE_SMOOTH);
             playerLabel2 = new JLabel(new ImageIcon(player2));
             playerLabel2.setBounds(x+5, y, playerwidth, playerheight);
