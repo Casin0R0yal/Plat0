@@ -1,4 +1,4 @@
-package Proj;
+package src;
 
 public class Case {
     public int price;
