@@ -9,9 +9,11 @@ public class Server {
 
     static List<Player> players = new ArrayList<Player>();
     static List<Integer> positions = new ArrayList<Integer>();
-    static int PLAYER_MAX = 1;
+    static int PLAYER_MAX = 2;
     static int currentPlayer = 0;
     static Board board = new Board();
+    static Luck luck = new Luck();
+    static Community community = new Community();
 
     public void Connection() throws IOException {
         ServerSocket serverSocket = null;
@@ -19,9 +21,9 @@ public class Server {
         int playerCount = 0;
 
         try {
-            serverSocket = new ServerSocket(4444);
+            serverSocket = new ServerSocket(51734);
         } catch (IOException e) {
-            System.err.println("Could not listen on port: 4444.");
+            System.err.println("Could not listen on port: 51734.");
             System.exit(-1);
         }
         int temp = 0;
@@ -52,8 +54,9 @@ public class Server {
             this.playerCount = playerCount;
             this.socket = socket;
             this.playerId = playerId;
-            players.add(new Player(new Affichage(playerId, PLAYER_MAX)));
+            players.add(new Player(playerId, playerCount));
             positions.add(0);
+            players.get(playerId).Display();
             if (playerId+1 == playerCount) {
                 for (int i = 0; i < players.size(); i++) {
                     System.out.println("Player " + i + " is at position " + positions.get(i));
