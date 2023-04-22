@@ -22,7 +22,7 @@ To install Casin0R0yal Plat0, follow these steps:
 ``git clone https://github.com/Casin0R0yal/Plat0.git``
 - Navigate to the cloned repository.
 - Run the following command to launch the platform:
-``java -jar Plat0.jar``
+``make plato``
 
 ## Usage
 Once you have launched Casin0R0yal Plat0, you can select the game you want to play from the main menu. You can play Monopoly with friends in multiplayer mode.
