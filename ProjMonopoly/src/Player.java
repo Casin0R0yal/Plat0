@@ -1,4 +1,4 @@
-package Proj;
+package src;
 
 import java.net.*;
 import java.io.*;
@@ -9,21 +9,29 @@ public class Player {
     static Socket socket = null;
     static PrintWriter out = null;
     static BufferedReader in = null;
-    public Affichage affichage;
     public List<Case> cases = new ArrayList<Case>();
-    public int number = 0;
+    public int sold = 5000;
+    public boolean bankrupt;
+    public boolean inJail = false;
+    public int jailcard = 0;
+    public int nbdoubles = 0;
+    public Affichage affichage;
+    int playerId = -1;
+    int playerCount = -1;
 
-    public static void PlayButton() throws IOException {
-        System.out.println("Player.PlayButton  active");
+    public void Display() {
+        affichage = new Affichage(playerId, playerCount);
     }
 
-    public Player(Affichage affichage) {
-        this.affichage = affichage;
+    public Player(int playerId, int playerCount) {
+        this.playerCount = playerCount;
+        this.playerId = playerId;
     }
+
     public static void main(String[] args) throws IOException {
 
         try {
-            socket = new Socket("localhost", 4444); // connexion au serveur
+            socket = new Socket("localhost", 51734); // connexion au serveur
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (UnknownHostException e) {
