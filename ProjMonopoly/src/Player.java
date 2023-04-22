@@ -31,7 +31,7 @@ public class Player {
     public static void main(String[] args) throws IOException {
 
         try {
-            socket = new Socket("ibien.le-dauphin.tech", 51734); // connexion au serveur
+            socket = new Socket("localhost", 51734); // connexion au serveur
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         } catch (UnknownHostException e) {

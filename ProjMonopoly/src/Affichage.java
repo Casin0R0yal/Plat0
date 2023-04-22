@@ -5,8 +5,6 @@ import java.util.List;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.io.*;
-import java.net.*;
 
 class Affichage extends JFrame {
     public static final int WINDOW_WIDTH = 1000;
@@ -83,7 +81,7 @@ class Affichage extends JFrame {
         setResizable(false);
 
         // Load the image from a file
-        image = Toolkit.getDefaultToolkit().getImage("monopoly.png");
+        image = Toolkit.getDefaultToolkit().getImage("images/monopoly.png");
         imageWidth = image.getWidth(null);
         imageHeight = image.getHeight(null);
 
@@ -155,7 +153,7 @@ class Affichage extends JFrame {
         panel.add(Cancel);
 
         if (Server.PLAYER_MAX > 0) {
-            player1 = Toolkit.getDefaultToolkit().getImage("player.png");
+            player1 = Toolkit.getDefaultToolkit().getImage("images/player.png");
             player1 = player1.getScaledInstance(playerwidth, playerheight, Image.SCALE_SMOOTH);
             playerLabel1 = new JLabel(new ImageIcon(player1));
             playerLabel1.setBounds(x, y, playerwidth, playerheight);
@@ -165,7 +163,7 @@ class Affichage extends JFrame {
             panel.add(list1);
         }
         if (Server.PLAYER_MAX > 1) {
-            player2 = Toolkit.getDefaultToolkit().getImage("boat.png");
+            player2 = Toolkit.getDefaultToolkit().getImage("images/boat.png");
             player2 = player2.getScaledInstance(playerwidth, playerheight, Image.SCALE_SMOOTH);
             playerLabel2 = new JLabel(new ImageIcon(player2));
             playerLabel2.setBounds(x+5, y, playerwidth, playerheight);
@@ -175,7 +173,7 @@ class Affichage extends JFrame {
             panel.add(list2);
         }
         if (Server.PLAYER_MAX > 2) {
-            player3 = Toolkit.getDefaultToolkit().getImage("player.png");
+            player3 = Toolkit.getDefaultToolkit().getImage("images/player.png");
             player3 = player3.getScaledInstance(playerwidth, playerheight, Image.SCALE_SMOOTH);
             playerLabel3 = new JLabel(new ImageIcon(player3));
             playerLabel3.setBounds(x, y-5, playerwidth, playerheight);
@@ -185,7 +183,7 @@ class Affichage extends JFrame {
             panel.add(list3);
         }
         if (Server.PLAYER_MAX > 3) {
-            player4 = Toolkit.getDefaultToolkit().getImage("player.png");
+            player4 = Toolkit.getDefaultToolkit().getImage("images/player.png");
             player4 = player4.getScaledInstance(playerwidth, playerheight, Image.SCALE_SMOOTH);
             playerLabel4 = new JLabel(new ImageIcon(player4));
             playerLabel4.setBounds(x+5, y-5, playerwidth, playerheight);
