@@ -12,7 +12,7 @@ Ce jeu de Monopoly est une implémentation en Java basée sur la console, avec u
 ## Fonctionnalités
 
 - Affichage du plateau de jeu dans la console.
-![Monopoly Board](image/board.jpg)
+![Monopoly Board](image/board.png)
 - Acheter des propriétés et payer des loyers.
 - Gérer l'argent des joueurs.
 - Système de cartes Chance et Caisse de communauté.
