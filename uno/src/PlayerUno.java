@@ -1,10 +1,14 @@
+
+package uno.src;
+
 import java.util.List;
 import java.util.ArrayList;
-public class Player {
+
+public class PlayerUno {
 
     private List<Card> hand = new ArrayList<Card>();
 
-    public Player() {
+    public PlayerUno() {
         this.hand = new ArrayList<Card>();
     }
 
@@ -17,7 +21,7 @@ public class Player {
     }
 
     public List<Card> getHand() {
-        return hand;
+        return this.hand;
     }
 
 
@@ -26,6 +30,8 @@ public class Player {
             card.displaycard();
         }
     }
+
+
 
 
 }
