@@ -23,9 +23,9 @@ flow:
 	clear
 	java FlowLayoutDemo
 ui :
-	javac MyGridLayout.java
+	javac Connect4GUI.java
 	clear
-	java MyGridLayout
+	java Connect4GUI
 clean:
 	rm *.class
 

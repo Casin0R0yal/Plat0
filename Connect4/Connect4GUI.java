@@ -8,14 +8,14 @@ public class Connect4GUI extends JFrame implements ActionListener {
     private Board board;
     private JButton[][] grid;
     private JLabel playerTurnLabel;
-    private Game game;
+    //private Game game;
     private Player player1;
     private Player player2;
     private Player currentPlayer;
 
     public Connect4GUI() {
         board = new Board();
-        game = new Game(board);
+        //game = new Game(board);
 
         player1 = new Player("red", 1);
         player2 = new Player("yellow", 2);
@@ -49,47 +49,49 @@ public class Connect4GUI extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        // Get the button that was clicked
-        JButton button = (JButton) e.getSource();
+    // Get the button that was clicked
+    JButton button = (JButton) e.getSource();
 
-        // Find the row and column of the button in the grid
-        int row = -1;
-        int col = -1;
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
-                if (grid[i][j] == button) {
-                    row = i;
-                    col = j;
-                    break;
-                }
+    // Find the row and column of the button in the grid
+    int row = -1;
+    int col = -1;
+    for (int i = 0; i < 6; i++) {
+        for (int j = 0; j < 7; j++) {
+            if (grid[i][j] == button) {
+                row = i;
+                col = j;
+                break;
             }
         }
-
-        // Check if the move is valid
-        int[] putResult = board.PutCell(currentPlayer, col);
-        if (putResult == null) {
-            return;
-        }
-
-        // Update the grid and check for a winner
-        grid[putResult[0]][putResult[1]].setBackground(currentPlayer.getColor());
-        if (game.EndGame()) {
-            JOptionPane.showMessageDialog(this, currentPlayer.getName() + " has won!");
-            return;
-        }
-        if (game.TieGame()) {
-            JOptionPane.showMessageDialog(this, "The game is a tie.");
-            return;
-        }
-
-        // Switch to the other player's turn
-        if (currentPlayer == player1) {
-            currentPlayer = player2;
-        } else {
-            currentPlayer = player1;
-        }
-        playerTurnLabel.setText(currentPlayer.getName() + "'s turn");
     }
+
+    // Check if the move is valid
+    int[] putResult = board.PutCell(currentPlayer, col);
+    if (putResult == null) {
+        return;
+    }
+
+    // Update the grid
+    grid[putResult[0]][putResult[1]].setBackground(currentPlayer.getColor());
+
+    // Check if there is a winner or a tie
+    int winner = board.CheckWinner();
+    if (winner == currentPlayer.getId()) {
+        JOptionPane.showMessageDialog(this, currentPlayer.getName() + " wins!");
+        System.exit(0);
+    } else if (winner == -1 && board.IsFull()) {
+        JOptionPane.showMessageDialog(this, "It's a tie!");
+        System.exit(0);
+    }
+
+    // Switch to the other player's turn
+    if (currentPlayer == player1) {
+        currentPlayer = player2;
+    } else {
+        currentPlayer = player1;
+    }
+    playerTurnLabel.setText(currentPlayer.getName() + "'s turn");
+}
 
     public static void main(String[] args) {
         new Connect4GUI();

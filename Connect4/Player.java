@@ -28,4 +28,13 @@ public class Player {
         return color;
     }
 
+    public int getId()
+    {
+        Color c = this.getColor();
+        if(c == Color.RED)
+            return 1;
+        else
+            return 2;
+    }
+
 }
