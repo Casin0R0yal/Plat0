@@ -15,28 +15,30 @@ public class Board {
 
     private int nbcardstopick = 0;
     private String currentcolor = "";
+
+    // Constructor for a Board object
     public Board(int nbplayers) {
         this.stack = new Stack<Card>();
         this.players = new PlayerUno[nbplayers];
         this.pick = new Stack<Card>();
-        for (String color: colors){
+        for (String color: colors){ // Create the deck
             for (int i=1; i<10; i++){
-                pick.push(new Card(color, i, false, false, false, false, "./src/images/"+color+i+".png"));
-                pick.push(new Card(color, i, false, false, false, false, "./src/images/"+color+i+".png"));
+                pick.push(new Card(color, i, false, false, false, false));
+                pick.push(new Card(color, i, false, false, false, false));
             }
             for (int i=0; i<2; i++){
-                pick.push(new Card(color, -1, false, false, true, false, "./src/images/"+color+"+2.png"));
-                pick.push(new Card(color, -1, false, false, true, false, "./src/images/"+color+"+2.png"));
+                pick.push(new Card(color, -1, false, false, true, false));
+                pick.push(new Card(color, -1, false, false, true, false));
             }
             for (int i=0; i<2; i++){
-                pick.push(new Card(color, -1, false, false, false, true, "./src/images/"+color+"skip.png"));
-                pick.push(new Card(color, -1, false, false, false, true, "./src/images/"+color+"skip.png"));
+                pick.push(new Card(color, -1, false, false, false, true));
+                pick.push(new Card(color, -1, false, false, false, true));
             }
 
         }
         for (int i=0; i<4; i++){
-            pick.push(new Card("", -1, true, false, false, false, "./src/images/joker.png"));
-            pick.push(new Card("", -1, false, true, false, false, "./src/images/joker+4.png"));
+            pick.push(new Card("", -1, true, false, false, false));
+            pick.push(new Card("", -1, false, true, false, false));
         }
         java.util.Collections.shuffle(pick);
         for (int i=0; i<nbplayers; i++){
@@ -45,6 +47,7 @@ public class Board {
                 this.players[i].addCard(pick.pop());
             }
         }
+
         this.turn = 0;
         Card ctmp = pick.pop();
         while (ctmp.is_joker || ctmp.is_4_joker){
@@ -60,12 +63,12 @@ public class Board {
         return players;
     }
 
+    // function to play a turn
     public void play() {
-        // TODO Auto-generated method stub
         stack.peek().displaycard();
         if (stack.peek().is_4_joker || stack.peek().is_joker)
             System.out.println("\nCurrent color: " + currentcolor);
-
+        // if the player has to pick cards
         if (nbcardstopick!=0)
         {
             System.out.println("You have to pick " + nbcardstopick + " cards");
@@ -77,9 +80,10 @@ public class Board {
             return;
         }
 
-
+        // if the player can play
         System.out.println();
         boolean canfollow = false;
+        // display the hand of the player
         List<Card> playablecards =  new ArrayList<Card>();
         System.out.println("Your hand" + "player " + turn );
         for (int i=0; i<players[turn].getHand().size() ;i++)
@@ -87,6 +91,7 @@ public class Board {
             players[turn].getHand().get(i).displaycard();
             System.out.print(":"+ i + " ");
         }
+
         if (nbcardstopick==0)
         {
             for (Card cardtmp : players[turn].getHand())
@@ -99,7 +104,7 @@ public class Board {
                 }
             }
 
-
+            // if the player can't play
             if (!canfollow)
             {
                 System.out.println("You can't follow, you have to pick a card");
@@ -113,6 +118,7 @@ public class Board {
                 return;
             }
         }
+        // if the player can play
 
         if (canfollow) {
 
@@ -136,7 +142,7 @@ public class Board {
 
                 Card top = stack.peek();
                 Boolean played = false;
-
+                // loop until the player plays a card
                 while (!played) {
                     if (c.is_joker || c.is_4_joker || currentcolor == c.getColor() || top.getValue() == c.getValue()) {
 
@@ -160,7 +166,7 @@ public class Board {
 
 
 
-                    } else {
+                    } else { // if the player can't play the card
                         System.out.println("You can't play this card");
                         System.out.println("Choose a card to play");
                         sc = new Scanner(System.in);
@@ -177,6 +183,9 @@ public class Board {
             {
                 turn = (turn + 1) % players.length;
             }
+
+            // clear the console
+
             for(int i=0; i<50; i++)
             {
                 System.out.println();
@@ -189,7 +198,7 @@ public class Board {
             }
         }
     }
-
+    // function to play the game
     public void main_play() {
         Boolean end = false;
         while (!end) {

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class PlayerUno {
 
-    private List<Card> hand = new ArrayList<Card>();
+    private List<Card> hand = new ArrayList<Card>(); // the cards in the player's hand
 
     public PlayerUno() {
         this.hand = new ArrayList<Card>();
