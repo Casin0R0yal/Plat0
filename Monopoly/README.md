@@ -1,22 +1,18 @@
 # Monopoly en Java
 
-Ce jeu de Monopoly est une implémentation en Java basée sur la console, avec une image du plateau de jeu affichée pour une meilleure expérience de jeu. Les règles du jeu sont les mêmes que dans le Monopoly traditionnel, où les joueurs se déplacent sur un plateau, achètent des propriétés, paient des loyers et collectent de l'argent.
+This Monopoly game is a console-based Java implementation, with an image of the game board displayed for a better gaming experience. The rules of the game are the same as in traditional Monopoly, where players move around a board, buy properties, pay rent and collect money.
 
-## Comment jouer
+## How to play
 
-1. Clonez le dépôt GitHub sur votre ordinateur.
-2. Ouvrez le projet dans votre environnement de développement préféré.
-3. Exécutez le fichier `monopoly.java` pour démarrer le jeu.
-4. Suivez les instructions à l'écran pour jouer.
+1. Clone the GitHub repository on your computer.
+2. Open the project in your favorite development environment.
+3. Run the `monopoly.java` file to start the game.
+4. Follow the instructions on the screen to play.
 
-## Fonctionnalités
+## Features
 
-- Affichage du plateau de jeu dans la console.
+- Display the game board in the console.
 ![Monopoly Board](board.png)
-- Acheter des propriétés et payer des loyers.
-- Gérer l'argent des joueurs.
-- Système de cartes Chance et Caisse de communauté.
-
-## Personnalisation
-
-Si vous souhaitez personnaliser le jeu, vous pouvez modifier les fichiers de propriétés et de cartes pour ajouter vos propres cartes et propriétés.
+- Buy properties and pay rents.
+- Manage players' money.
+- Chance card system and community fund.
