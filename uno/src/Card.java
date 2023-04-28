@@ -1,3 +1,6 @@
+package uno.src;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 public class Card {
 
     public static final String ANSI_RED_BACKGROUND = "\u001B[41m";
@@ -22,8 +25,10 @@ public class Card {
     public final boolean is_joker;
 
     public final boolean is_4_joker;
+
+    public final Image image;
     public final boolean isplus2;
-    public Card(String color, int value, boolean is_joker, boolean is_4_joker, boolean isplus2, boolean iskip)
+    public Card(String color, int value, boolean is_joker, boolean is_4_joker, boolean isplus2, boolean iskip, String image)
     {
         this.iskip = iskip;
         this.color = color;
@@ -31,6 +36,7 @@ public class Card {
         this.is_joker = is_joker;
         this.is_4_joker = is_4_joker;
         this.isplus2 = isplus2;
+        this.image = new ImageIcon(image).getImage();
     }
 
     public int getValue() {
@@ -40,6 +46,7 @@ public class Card {
     public String getColor() {
         return color;
     }
+
     public void displaycard(){
 
 
@@ -55,7 +62,7 @@ public class Card {
             System.out.print(ANSI_BLACK_BACKGROUND+TEXT_GREEN+"Joker");
 
         else if (this.is_4_joker)
-            System.out.print("4 Joker");
+            System.out.print("+4 Joker");
         else if (this.isplus2)
             System.out.print("Plus 2");
         else if (this.iskip)
