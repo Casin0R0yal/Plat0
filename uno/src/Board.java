@@ -85,7 +85,7 @@ public class Board {
         boolean canfollow = false;
         // display the hand of the player
         List<Card> playablecards =  new ArrayList<Card>();
-        System.out.println("Your hand" + "player " + turn );
+        System.out.println("Your hand" + " player " + turn );
         for (int i=0; i<players[turn].getHand().size() ;i++)
         {
             players[turn].getHand().get(i).displaycard();
