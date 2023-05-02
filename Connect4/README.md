@@ -7,7 +7,7 @@ To run the game in the terminal, run the command ``make process``.
 
 ## The board
 
-![image](images/monopoly.png)
+![image](images/connect4.png)
 
 The board is the same as the original Connect-4 game.
 
@@ -26,6 +26,8 @@ The player is either in red or yellow.
 #### In the Terminal
 When it is your turn, you just need to type the number of the column you want to
 put your token in and press enter.
+![image](images/process.png)
 
 #### In the UI
 When it is your turn, all you need to do is click on the column where you want to put your token.
+![image](images/game.png)
