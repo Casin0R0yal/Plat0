@@ -22,10 +22,13 @@ To install Casin0R0yal Plat0, follow these steps:
 ``git clone https://github.com/Casin0R0yal/Plat0.git``
 - Navigate to the cloned repository.
 - Run the following command to launch the platform:
-``make plato``
+``make``
 
 ## Usage
 Once you have launched Casin0R0yal Plat0, you can select the game you want to play from the main menu. You can play Monopoly with friends in multiplayer mode.
+
+## Games
+You will see that a README.md file is present in every directory (One for each game that is available in our platform). You can check these README files to launch each game separately or you can execute the ``make`` command in the main directory in order to launch the platform.
 
 ## Contributing
 We welcome contributions from anyone who wants to help make Casin0R0yal Plat0 better. To contribute, please follow these steps:
