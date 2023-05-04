@@ -14,3 +14,6 @@ $(OUT_DIR)/%.class: src/%.java
 
 clean:
 	$(RM) -r $(OUT_DIR)/*
+	make -C Connect4 clean
+	make -C uno/src clean
+	make -C Solitaire/src clean

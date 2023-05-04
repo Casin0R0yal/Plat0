@@ -1,4 +1,4 @@
-package uno.src;
+//package uno.src;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -53,10 +53,10 @@ public class Card {
     public void displaycard(){
         switch (this.getColor()) {
             // Use ANSI escape codes to color the background of the card based on its color
-            case "red" -> System.out.print(ANSI_RED_BACKGROUND + TEXT_BLACK);
-            case "green" -> System.out.print(ANSI_GREEN_BACKGROUND + TEXT_BLACK);
-            case "yellow" -> System.out.print(ANSI_YELLOW_BACKGROUND + TEXT_BLACK);
-            case "blue" -> System.out.print(ANSI_BLUE_BACKGROUND + TEXT_BLACK);
+            case "red" : System.out.print(ANSI_RED_BACKGROUND + TEXT_BLACK);
+            case "green" : System.out.print(ANSI_GREEN_BACKGROUND + TEXT_BLACK);
+            case "yellow" : System.out.print(ANSI_YELLOW_BACKGROUND + TEXT_BLACK);
+            case "blue" : System.out.print(ANSI_BLUE_BACKGROUND + TEXT_BLACK);
         }
 
         // Display the card value or type

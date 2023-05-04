@@ -3,6 +3,8 @@ package src;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.IOException;
 
 public class Plato {
     public static void main(String[] args) {
@@ -28,6 +30,20 @@ public class Plato {
         button1.setBounds(275, 175, 100, 100);
         button1.setContentAreaFilled(false);
         button1.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Process process = Runtime.getRuntime().exec("make plato");
+                    BufferedReader reader = new BufferedReader(new java.io.InputStreamReader(process.getInputStream()));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        System.out.println(line);
+                    }
+                    System.out.println("Monopoly Server Started");
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+
             public void mouseEntered(MouseEvent e) {
                 button1.setBounds(225, 125, 200, 200);
             }
@@ -42,6 +58,19 @@ public class Plato {
         button2.setBounds(425, 175, 100, 100);
         button2.setContentAreaFilled(false);
         button2.addMouseListener(new MouseAdapter() {
+             public void mouseClicked(MouseEvent e) {
+                try {
+                    Process process = Runtime.getRuntime().exec("make -C uno/src");
+                    BufferedReader reader = new BufferedReader(new java.io.InputStreamReader(process.getInputStream()));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        System.out.println(line);
+                    }
+                    System.out.println("Connect-4 started");
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
             public void mouseEntered(MouseEvent e) {
                 button2.setBounds(375, 125, 200, 200);
             }
@@ -56,6 +85,19 @@ public class Plato {
         button3.setBounds(275, 325, 100, 100);
         button3.setContentAreaFilled(false);
         button3.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Process process = Runtime.getRuntime().exec("make -C Solitaire/src");
+                    BufferedReader reader = new BufferedReader(new java.io.InputStreamReader(process.getInputStream()));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        System.out.println(line);
+                    }
+                    System.out.println("Connect-4 started");
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
             public void mouseEntered(MouseEvent e) {
                 button3.setBounds(225, 275, 200, 200);
             }
@@ -70,6 +112,19 @@ public class Plato {
         button4.setBounds(425, 325, 100, 100);
         button4.setContentAreaFilled(false);
         button4.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Process process = Runtime.getRuntime().exec("make -C Connect4 ui");
+                    BufferedReader reader = new BufferedReader(new java.io.InputStreamReader(process.getInputStream()));
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        System.out.println(line);
+                    }
+                    System.out.println("Connect-4 started");
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
             public void mouseEntered(MouseEvent e) {
                 button4.setBounds(375, 275, 200, 200);
             }

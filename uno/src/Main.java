@@ -1,4 +1,4 @@
-package uno.src;
+//package uno.src;
 import javax.swing.*;
 import java.awt.*;
 public class Main {
