@@ -32,7 +32,7 @@ public class Plato {
         button1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 try {
-                    Process process = Runtime.getRuntime().exec("make plato");
+                    Process process = Runtime.getRuntime().exec("make -C Monopoly/ProjMonopoly");
                     BufferedReader reader = new BufferedReader(new java.io.InputStreamReader(process.getInputStream()));
                     String line;
                     while ((line = reader.readLine()) != null) {
