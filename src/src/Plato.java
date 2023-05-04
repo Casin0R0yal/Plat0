@@ -93,7 +93,8 @@ public class Plato {
                     while ((line = reader.readLine()) != null) {
                         System.out.println(line);
                     }
-                    System.out.println("Connect-4 started");
+
+
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
