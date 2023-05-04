@@ -19,7 +19,7 @@ This project does not have any external dependencies. It was developed using Jav
 
 ## Authors
 * Samy YACEF
-* Plato Group
+* Casin0R0yal Group
 
 ## Acknowledgments
 * This project was inspired by the Solitaire game built into Windows.
