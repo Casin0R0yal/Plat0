@@ -2,7 +2,7 @@
 This game is a uno game for  in the terminal 2 players.
 
 ## Launching
-Compile the Java files and launch the game by running the command make in the uno/src directory.
+Compile the Java files and launch the game by running the command ``make`` in the uno/src directory.
 
 ## Rules
 Each cards have a color and a number or a special effect.
