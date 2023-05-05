@@ -13,8 +13,5 @@ $(OUT_DIR)/%.class: src/%.java
 	$(JC) $(JFLAGS) $< -d $(OUT_DIR)
 
 clean:
-	$(RM) -r $(OUT_DIR)/*
-	make -C Connect4 clean
-	make -C uno/src clean
-	make -C Monopoly/ProjMonopoly clean
-	make -C Solitaire/src clean
+	$(RM) -r $(OUT_DIR)/*	
+	make -C Monopoly/ProjMonopoly clean && make -C Connect4 clean && make -C uno/src clean && make -C Solitaire/src clean

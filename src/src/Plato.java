@@ -32,6 +32,7 @@ public class Plato {
         button1.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 try {
+                    frame.setVisible(false);
                     Process process = Runtime.getRuntime().exec("make -C Monopoly/ProjMonopoly");
                     BufferedReader reader = new BufferedReader(new java.io.InputStreamReader(process.getInputStream()));
                     String line;
@@ -60,6 +61,7 @@ public class Plato {
         button2.addMouseListener(new MouseAdapter() {
              public void mouseClicked(MouseEvent e) {
                 try {
+                    frame.setVisible(false);
                     Process process = Runtime.getRuntime().exec("make -C uno/src");
                     BufferedReader reader = new BufferedReader(new java.io.InputStreamReader(process.getInputStream()));
                     String line;
@@ -87,6 +89,7 @@ public class Plato {
         button3.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 try {
+                    frame.setVisible(false);
                     Process process = Runtime.getRuntime().exec("make -C Solitaire/src");
                     BufferedReader reader = new BufferedReader(new java.io.InputStreamReader(process.getInputStream()));
                     String line;
@@ -115,6 +118,7 @@ public class Plato {
         button4.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 try {
+                    frame.setVisible(false);
                     Process process = Runtime.getRuntime().exec("make -C Connect4 ui");
                     BufferedReader reader = new BufferedReader(new java.io.InputStreamReader(process.getInputStream()));
                     String line;

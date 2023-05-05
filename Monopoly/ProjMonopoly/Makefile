@@ -6,10 +6,9 @@ OUT_DIR = out
 .java.class:
 	$(JC) $(JFLAGS) $*.java -d $(OUT_DIR)
 
-server: $(OUT_DIR)/src/Server.class
-	java -cp $(OUT_DIR) src.Server
-
-player: $(OUT_DIR)/src/Player.class
+monopoly: $(OUT_DIR)/src/Server.class
+	java -cp $(OUT_DIR) src.Server & \
+	java -cp $(OUT_DIR) src.Player & \
 	java -cp $(OUT_DIR) src.Player
 
 $(OUT_DIR)/src/Server.class: src/Server.java
